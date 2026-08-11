@@ -66,12 +66,12 @@
   }
 
   /* ---- DARK MODE TOKEN RE-POINT ---------------------------------------
-     The skin supplies body.alt values for the thirteen identity variables.
+     The skin supplies body.dark values for the thirteen identity variables.
      Everything derived re-points here, once, for every unit. This is the
      engine-level fix for the three defects logged in MOBILE_FIXES_HANDOVER:
      a skin no longer needs the patch block at all.
      ------------------------------------------------------------------- */
-  body.alt {
+  body.dark {
     --muted:      var(--fade);
     --hair:       rgba(255,255,255,0.14);
     --hair-strong:rgba(255,255,255,0.26);
@@ -89,11 +89,9 @@
     --inset:  rgba(255,255,255,0.05);
   }
   /* Key term chips keep a visible edge once the ground inverts. */
-  body.alt .kt-term { border-color: var(--hair-strong); }
-  body.alt .kt-term summary { color: var(--ink); }
-  body.alt .kt-label { border-top-color: var(--hair-strong); }
-  /* v2 dimmed the options a learner did not pick; at 0.45 they vanish on a dark ground. */
-  body.alt .option.dimmed, body.alt .option-btn.dimmed { opacity: 0.72; }
+  body.dark .kt-term { border-color: var(--hair-strong); }
+  body.dark .kt-term summary { color: var(--ink); }
+  body.dark .kt-label { border-top-color: var(--hair-strong); }
 
   /* ---- MODE TOGGLE. Fixed bottom right, 44px minimum tap target. ---- */
   .mode-toggle {
@@ -163,6 +161,11 @@
   /* container orange for structure, sea teal for reward */
   --a1: #BC4E1B;  --a1-rgb: 188,78,27;
   --a2: #0F6469;  --a2-rgb: 15,100,105;
+  /* The two hover steps are derived, not identity. They stayed on the
+     engine's bottle green when this skin overrode --a2, which is why
+     Continue and Begin hovered a colour from no other part of the unit. */
+  --ink-deep: #0D161D;
+  --a2-deep:  #0B4B4F;
   --sans:  system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   --serif: Georgia, 'Times New Roman', serif;
   --mono:  ui-monospace, 'Cascadia Code', Consolas, 'Courier New', monospace;
@@ -191,7 +194,7 @@ h1, h2, h3 {
 }
 
 /* Labels: outlined plates with a leading square node. Nothing filled. */
-.stage-tag, .kt-label, .expl-label, .pop-label, .runsum-label, .breakdown-label {
+.stage-tag, .kt-label, .expl-label, .pop-label, .breakdown-label {
   font-family: var(--sans) !important;
   background: transparent !important;
   color: var(--a2) !important;
@@ -267,7 +270,7 @@ h1, h2, h3 {
 
 /* ---- DARK MODE ------------------------------------------------------------
    The yard at night. The dot grid stays, lit rather than printed. */
-body.alt {
+body.dark {
   --sand:  #101619;
   --paper: #192227;
   --cut:   #212C32;
@@ -277,57 +280,58 @@ body.alt {
   --a1: #E8834A;  --a1-rgb: 232,131,74;
   --a2: #55B7BC;  --a2-rgb: 85,183,188;
 }
-body.alt {
+body.dark {
   background-image:
     radial-gradient(circle at 1px 1px, rgba(233,239,242,0.11) 1px, transparent 1.6px) !important;
   background-size: 22px 22px !important;
 }
-body.alt .card, body.alt .stat-wrap, body.alt .carousel, body.alt .kt {
+body.dark .card, body.dark .stat-wrap, body.dark .carousel, body.dark .kt {
   border-color: rgba(233,239,242,0.16) !important;
   border-left-color: var(--a1) !important;
 }
-body.alt .source { background: var(--cut) !important; border-color: rgba(233,239,242,0.22) !important; }
-body.alt .source-attr { background: #0B1215 !important; color: #E9EFF2 !important; }
-body.alt .stage-tag, body.alt .kt-label, body.alt .expl-label,
-body.alt .pop-label, body.alt .runsum-label, body.alt .breakdown-label {
+body.dark .source { background: var(--cut) !important; border-color: rgba(233,239,242,0.22) !important; }
+body.dark .source-attr { background: #0B1215 !important; color: #E9EFF2 !important; }
+body.dark .stage-tag, body.dark .kt-label, body.dark .expl-label,
+body.dark .pop-label, body.dark .breakdown-label {
   color: #8FD3D7 !important; border-color: rgba(85,183,188,0.55) !important; background: transparent !important;
 }
-body.alt .btn-begin { background: var(--a1) !important; border-color: var(--a1) !important; color: #101619 !important; }
-body.alt .btn-begin:hover { background: #F09A67 !important; border-color: #F09A67 !important; }
-body.alt .mode-toggle { background: #232E35 !important; color: #C7D2D8 !important; border-color: rgba(233,239,242,0.22) !important; box-shadow: 0 2px 10px rgba(0,0,0,0.45) !important; }
-body.alt .mode-toggle:hover { color: #E9EFF2 !important; border-color: rgba(233,239,242,0.40) !important; }
-body.alt .rule, body.alt .cover-rule, body.alt .flourish, body.alt .story-rule {
+body.dark .btn-begin { background: var(--a1) !important; border-color: var(--a1) !important; color: #101619 !important; }
+body.dark .btn-begin:hover { background: #F09A67 !important; border-color: #F09A67 !important; }
+body.dark .mode-toggle { background: #232E35 !important; color: #C7D2D8 !important; border-color: rgba(233,239,242,0.22) !important; box-shadow: 0 2px 10px rgba(0,0,0,0.45) !important; }
+body.dark .mode-toggle:hover { color: #E9EFF2 !important; border-color: rgba(233,239,242,0.40) !important; }
+body.dark .rule, body.dark .cover-rule, body.dark .flourish, body.dark .story-rule {
   background-image: repeating-linear-gradient(90deg, var(--a1) 0 7px, transparent 7px 14px) !important;
 }
-body.alt .chip { background: rgba(232,131,74,0.18) !important; color: #F6C6A6 !important; }
-body.alt .chip-recall,     body.alt .chip-extract   { background: rgba(232,131,74,0.22) !important; color: #F8D3BA !important; }
-body.alt .chip-understand, body.alt .chip-interpret { background: rgba(85,183,188,0.22) !important; color: #B9E6E8 !important; }
-body.alt .chip-apply,      body.alt .chip-evaluate  { background: rgba(233,239,242,0.18) !important; color: #E9EFF2 !important; }
+body.dark .chip { background: rgba(232,131,74,0.18) !important; color: #F6C6A6 !important; }
+body.dark .chip-recall,     body.dark .chip-extract   { background: rgba(232,131,74,0.22) !important; color: #F8D3BA !important; }
+body.dark .chip-understand, body.dark .chip-interpret { background: rgba(85,183,188,0.22) !important; color: #B9E6E8 !important; }
+body.dark .chip-apply,      body.dark .chip-evaluate  { background: rgba(233,239,242,0.18) !important; color: #E9EFF2 !important; }
 
 /* ---- DARK MODE STATE COLOURS ---------------------------------------------- */
-body.alt .option, body.alt .option-btn {
+body.dark .option, body.dark .option-btn {
   background: var(--cut) !important;
   border-color: rgba(233,239,242,0.22) !important;
   color: var(--ink) !important;
 }
-body.alt .option.selected, body.alt .option-btn.selected {
+body.dark .option.selected, body.dark .option-btn.selected {
   background: rgba(85,183,188,0.18) !important; border-color: #55B7BC !important; }
-body.alt .option.correct, body.alt .option-btn.correct {
+body.dark .option.correct, body.dark .option-btn.correct {
   background: rgba(85,183,188,0.24) !important; border-color: #55B7BC !important; color: var(--ink) !important; }
-body.alt .option.wrong, body.alt .option-btn.wrong {
+body.dark .option.wrong, body.dark .option-btn.wrong {
   background: rgba(232,131,74,0.20) !important; border-color: #E8834A !important; color: var(--ink) !important; }
-body.alt .secondary-btn:hover:not(:disabled) { background: var(--cut) !important; }
-body.alt .explanation { background: var(--cut) !important; border-color: rgba(85,183,188,0.30) !important; }
-body.alt .expl-text { color: var(--ink) !important; }
-body.alt .quiz-foot, body.alt .quiz-foot a { color: var(--clay) !important; }
+body.dark .secondary-btn:hover:not(:disabled) { background: var(--cut) !important; }
+body.dark .explanation { background: var(--cut) !important; border-color: rgba(85,183,188,0.30) !important; }
+body.dark .expl-text { color: var(--ink) !important; }
+body.dark .quiz-foot, body.dark .quiz-foot a { color: var(--clay) !important; }
 
-/* The dimmed state fell below readable contrast at 360px. Raised in both modes. */
-.option.dimmed, .option-btn.dimmed { opacity: 0.82 !important; }
-body.alt .option.dimmed, body.alt .option-btn.dimmed { opacity: 0.86 !important; }
+/* The dimmed state fell below readable contrast at 360px. One rule per mode,
+   and nothing later in the file competes with it, so no !important. */
+.option.dimmed, .option-btn.dimmed { opacity: 0.82; }
+body.dark .option.dimmed, body.dark .option-btn.dimmed { opacity: 0.86; }
 
-/* Button hover must not read as a different colour family. */
-.btn-primary:hover:not(:disabled) { background: #0B4B4F !important; }
-body.alt .btn-primary:hover:not(:disabled) { background: #6FC7CB !important; color: #101619 !important; }
+/* Button hover must not read as a different colour family. Light mode now
+   comes from --a2-deep in the identity block above. */
+body.dark .btn-primary:hover:not(:disabled) { background: #6FC7CB !important; color: #101619 !important; }
 
 /* The toggle is a rounded pill on a white ground, the one round thing in a
    skin of hard edges. It is fixed bottom right and lands on Continue on a
@@ -364,8 +368,8 @@ body { padding-bottom: 4.5rem !important; }
   padding-top: 0.6rem;
 }
 .figure img { border: 1px solid rgba(188,78,27,0.35) !important; border-radius: 0 !important; width: 100%; height: auto; }
-body.alt .figure img { border-color: rgba(232,131,74,0.40) !important; filter: brightness(0.92) contrast(1.02); }
-body.alt .figure figcaption { border-top-color: var(--a1); }
+body.dark .figure img { border-color: rgba(232,131,74,0.40) !important; filter: brightness(0.92) contrast(1.02); }
+body.dark .figure figcaption { border-top-color: var(--a1); }
 
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -440,8 +444,6 @@ body.alt .figure figcaption { border-top-color: var(--a1); }
   .option-btn.selected { background: var(--cut); border-color: var(--a1); border-width: 2px; padding: 0.94rem 0.99rem; }
   .option-btn.correct { background: var(--ok-bg); border-color: var(--a2); border-width: 2px; padding: 0.94rem 0.99rem; }
   .option-btn.wrong { background: var(--no-bg); border-color: var(--clay); border-width: 2px; padding: 0.94rem 0.99rem; }
-  .option-btn.dimmed { opacity: 0.48; }
-  body.alt .option-btn.dimmed { opacity: 0.72; }
   .opt-letter { font-weight: 800; color: var(--a1); min-width: 1.1rem; }
   .opt-text { flex: 1; }
   .opt-mark { font-weight: 700; font-size: 1.1rem; }
@@ -576,22 +578,39 @@ body.alt .figure figcaption { border-top-color: var(--a1); }
     <div class="breakdown"><div class="breakdown-label">By tier</div><div id="level-rows"></div></div>
     <div class="breakdown"><div class="breakdown-label">By section</div><div id="breakdown-rows"></div></div>
     <div><div class="review-all-label">Every question</div><div id="review-cards"></div></div>
+    <p class="grade-desc hidden" id="closing-line"></p>
     <div class="review-actions">
       <button class="primary-btn" id="restart-btn"><span class="btn-txt"><span class="btn-title">Return to menu</span><span class="btn-sub">Try another section or retake the full test</span></span><span class="btn-arrow">&#8635;</span></button>
-      <button class="primary-btn" id="finish-btn"><span class="btn-txt"><span class="btn-title">Finish</span><span class="btn-sub">Then tap Done to continue</span></span><span class="btn-arrow">&rarr;</span></button>
+      <button class="primary-btn" id="finish-btn"><span class="btn-txt"><span class="btn-title">Continue to Lesson 1</span><span class="btn-sub">The World Gets Smaller</span></span><span class="btn-arrow">&rarr;</span></button>
     </div>
   </div>
 </div>
 
 <script>
+/* ---- LMS EMBED EVENTS ----------------------------------------------------
+   Two moments, deliberately separate. Reaching the closing screen marks the
+   activity done for progress tracking. Choosing to leave it advances. Firing
+   advance on arrival would pull the learner off their own results screen
+   before they had read it. ------------------------------------------------ */
+var KulaLMS = (function(){
+  var done = false;
+  function send(ev){
+    try{
+      window.parent.postMessage({ type: 'lms-embed-event', version: '1.0',
+        payload: { event: ev } }, '*');
+    }catch(e){}
+  }
+  return {
+    completed: function(){ if(done) return; done = true; send('completed'); },
+    advance:   function(){ send('advance'); }
+  };
+})();
 /* kula: re-entry guard. Every declaration below is function scoped, so a
    viewer that re-runs this script re-initialises instead of throwing a
    redeclaration SyntaxError. */
 (function(){
 const MODE = "a";
-const DONE_LABEL = "Check complete";
-const DONE_TITLE = "What You Know Already";
-const DONE_TEXT  = "Tap Done to continue to Lesson 1, The World Gets Smaller.";
+const CLOSING_TEXT = "";
 const INTRO = "This checks recall: the dates, names, figures and terms the globalisation questions are built from. Take it before Lesson 1. A low score here is the normal starting point and not a warning, so do not worry about the number. Every question tells you why the answer is right. Write your score down at the end so you can compare it after Lesson 5.";
 const SECTIONS = [
   "What globalisation is",
@@ -1011,20 +1030,9 @@ document.getElementById('prev-btn').addEventListener('click', () => {
 document.getElementById('exit-btn').addEventListener('click', () => { quiz.classList.add('hidden'); menu.classList.remove('hidden'); });
 document.getElementById('restart-btn').addEventListener('click', () => { review.classList.add('hidden'); menu.classList.remove('hidden'); });
 
-/* v2.1. Every file in a unit now ends the same way: Finish, then a pop-up whose
-   only job is to tell the learner to tap the platform's Done control. The four
-   knowledge checks previously ended on the results screen with no instruction,
-   so two files in every seven closed differently from the other five. */
-document.getElementById('finish-btn').addEventListener('click', () => {
-  const back = document.createElement('div');
-  back.className = 'pop-back';
-  back.innerHTML = '<div class="pop"><div class="pop-label">' + DONE_LABEL +
-    '</div><h3 style="margin:.4rem 0 .2rem;font-size:1.05rem;">' + DONE_TITLE +
-    '</h3><div class="pop-text">' + DONE_TEXT +
-    '</div><button class="pop-btn" id="fin-ok">Done</button></div>';
-  document.body.appendChild(back);
-  document.getElementById('fin-ok').addEventListener('click', () => back.remove());
-});
+/* The button at the end of the file is the thing that continues. It does not
+   point at a control somewhere else on the page. */
+document.getElementById('finish-btn').addEventListener('click', () => { KulaLMS.advance(); });
 
 function weakestSection(){
   let worst = SECTIONS[0], worstPct = 2;
@@ -1102,6 +1110,9 @@ function showReview(){
     rows.innerHTML += `<div class="breakdown-row"><div class="breakdown-name">${sec}</div><div class="breakdown-bar"><div class="breakdown-fill" style="width:${p}%"></div></div><div class="breakdown-score">${got}/${qs.length}</div></div>`;
   });
 
+  const closing = document.getElementById('closing-line');
+  if(CLOSING_TEXT){ closing.textContent = CLOSING_TEXT; closing.classList.remove('hidden'); }
+
   const cards = document.getElementById('review-cards'); cards.innerHTML = '';
   state.list.forEach((q, i) => {
     const your = state.answers[q.id];
@@ -1119,6 +1130,7 @@ function showReview(){
     cards.appendChild(card);
   });
   window.scrollTo({top:0,behavior:'smooth'});
+  KulaLMS.completed();
 }
 
 buildMenu();
@@ -1130,29 +1142,29 @@ buildMenu();
    single script block so a first-to-last script extraction still parses. */
 (function(){
   var NATIVE = "light";
-  try{ if(localStorage.getItem("kula-mode")==="alt"){ document.body.classList.add("alt"); } }catch(e){}
+  try{ if(localStorage.getItem("kula-mode")==="dark"){ document.body.classList.add("dark"); } }catch(e){}
   var SUN='<circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/>';
   var MOON='<path d="M20.5 14.6A8.6 8.6 0 0 1 9.4 3.5a8.6 8.6 0 1 0 11.1 11.1z"/>';
-  var b=document.getElementById("mode-toggle");
+  var b=document.getElementById("kula-mode-toggle");
   if(!b){
     b=document.createElement("button");
-    b.className="mode-toggle"; b.id="mode-toggle"; b.type="button";
+    b.className="mode-toggle"; b.id="kula-mode-toggle"; b.type="button";
     b.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true" id="mode-icon"></svg><span id="mode-label"></span>';
     document.body.appendChild(b);
   }
   var lab=document.getElementById("mode-label"), ic=document.getElementById("mode-icon");
   function paint(){
-    var onAlt=document.body.classList.contains("alt");
-    var showing = onAlt ? (NATIVE==="dark" ? "light" : "dark") : NATIVE;
+    var onDark=document.body.classList.contains("dark");
+    var showing = onDark ? (NATIVE==="dark" ? "light" : "dark") : NATIVE;
     var offering = showing==="dark" ? "light" : "dark";
-    lab.textContent = offering==="light" ? "Light Mode" : "Dark Mode";
+    lab.textContent = offering==="light" ? "Light mode" : "Dark mode";
     ic.innerHTML = offering==="light" ? SUN : MOON;
-    b.setAttribute("aria-pressed", onAlt ? "true" : "false");
+    b.setAttribute("aria-pressed", onDark ? "true" : "false");
     b.setAttribute("aria-label", "Switch to " + offering + " mode");
   }
   b.addEventListener("click",function(){
-    var onAlt=document.body.classList.toggle("alt");
-    try{ localStorage.setItem("kula-mode", onAlt ? "alt" : "native"); }catch(e){}
+    var onDark=document.body.classList.toggle("dark");
+    try{ localStorage.setItem("kula-mode", onDark ? "dark" : "native"); }catch(e){}
     paint();
   });
   paint();
