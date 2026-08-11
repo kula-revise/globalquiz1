@@ -194,7 +194,7 @@ h1, h2, h3 {
 }
 
 /* Labels: outlined plates with a leading square node. Nothing filled. */
-.stage-tag, .kt-label, .expl-label, .pop-label, .breakdown-label {
+.stage-tag, .kt-label, .expl-label, .breakdown-label {
   font-family: var(--sans) !important;
   background: transparent !important;
   color: var(--a2) !important;
@@ -207,7 +207,7 @@ h1, h2, h3 {
   font-size: 0.63rem !important;
   font-weight: 700 !important;
 }
-.stage-tag::before, .kt-label::before, .expl-label::before, .pop-label::before {
+.stage-tag::before, .kt-label::before, .expl-label::before {
   content: "";
   display: inline-block;
   width: 6px; height: 6px;
@@ -245,7 +245,7 @@ h1, h2, h3 {
 .option-letter, .opt-letter { border-radius: 0 !important; }
 
 /* Buttons: square, no rounding anywhere. */
-.btn-primary, .btn-secondary, .btn-begin, .pop-btn, .toggle-btn, .secondary-btn {
+.btn-primary, .btn-secondary, .btn-begin, .toggle-btn, .secondary-btn {
   border-radius: 0 !important;
 }
 
@@ -292,7 +292,7 @@ body.dark .card, body.dark .stat-wrap, body.dark .carousel, body.dark .kt {
 body.dark .source { background: var(--cut) !important; border-color: rgba(233,239,242,0.22) !important; }
 body.dark .source-attr { background: #0B1215 !important; color: #E9EFF2 !important; }
 body.dark .stage-tag, body.dark .kt-label, body.dark .expl-label,
-body.dark .pop-label, body.dark .breakdown-label {
+body.dark .breakdown-label {
   color: #8FD3D7 !important; border-color: rgba(85,183,188,0.55) !important; background: transparent !important;
 }
 body.dark .btn-begin { background: var(--a1) !important; border-color: var(--a1) !important; color: #101619 !important; }
@@ -418,8 +418,11 @@ body.dark .figure figcaption { border-top-color: var(--a1); }
   .btn-num { font-family: var(--sans); font-size: 1.4rem; color: var(--a1); font-weight: 800; min-width: 35px; }
   .btn-txt { flex: 1; display: flex; flex-direction: column; gap: 0.2rem; }
   .btn-title { font-family: var(--sans); font-size: 1.15rem; font-weight: 700; }
-  .btn-sub { font-family: var(--sans); font-size: 0.82rem; color: var(--muted); }
-  .btn-arrow { font-size: 1.3rem; color: var(--a1); }
+  /* These two sit inside .primary-btn, whose ground is --ink, so they take
+     --on-ink. They were on --muted and --a1, which are colours for text on
+     paper, and both read badly on the button in either mode. */
+  .btn-sub { font-family: var(--sans); font-size: 0.82rem; color: var(--on-ink); opacity: 0.82; }
+  .btn-arrow { font-size: 1.3rem; color: var(--on-ink); }
   .section-list { display: flex; flex-direction: column; gap: 0.5rem; }
   .section-btn { display: flex; align-items: center; gap: 1rem; padding: 0.95rem 1.1rem; background: transparent; border: 1px solid var(--hair-strong); cursor: pointer; font-family: inherit; text-align: left; transition: all 0.2s; color: var(--ink); }
   .section-btn:hover { background: var(--paper); border-color: var(--a1); }
@@ -490,16 +493,6 @@ body.dark .figure figcaption { border-top-color: var(--a1); }
   .hidden { display: none !important; }
 
 
-  /* v2.1 finish pop-up, matched to the lesson engine so a learner meets the
-     same closing screen in all seven files of a unit. */
-  .pop-back { position: fixed; inset: 0; background: var(--scrim); display: flex;
-    align-items: center; justify-content: center; padding: 1.2rem; z-index: 90; }
-  .pop { background: var(--paper); border: 1px solid var(--hair); max-width: 26rem;
-    width: 100%; padding: 1.4rem 1.3rem; text-align: center; }
-  .pop-label { font-family: var(--sans); font-size: 0.62rem; letter-spacing: 0.15em;
-    text-transform: uppercase; font-weight: 700; color: var(--a1); }
-  .pop-text { font-size: 0.95rem; line-height: 1.6; color: var(--ink); margin: 0.5rem 0 1.1rem; }
-  .pop-btn { font-family: var(--sans); font-size: 0.78rem; font-weight: 700;
     letter-spacing: 0.09em; text-transform: uppercase; min-height: 44px; padding: 0.6rem 1.4rem;
     cursor: pointer; background: transparent; color: var(--muted);
     border: 1px solid var(--hair); border-radius: 0; }
@@ -629,7 +622,7 @@ const QUESTIONS = [
       "Goods, money, people and borders"
     ],
     "correct": 0,
-    "explanation": "Goods, money, people and ideas. All four of them. The fourth one is the one people forget. Many learners choose option {opt3}, because ideas cannot be seen and a ship can. If you leave ideas out, you cannot explain the cultural side of this topic. A definition that names only trade will lose you marks.",
+    "explanation": "Goods, money, people and ideas. All four of them. The fourth one is the one people forget. Option {opt3} is tempting, because ideas cannot be seen and a ship can. If you leave ideas out, you cannot explain the cultural side of this topic. A definition that names only trade will lose you marks.",
     "id": 1,
     "slot": 1,
     "section": "What globalisation is",
@@ -644,7 +637,7 @@ const QUESTIONS = [
       "1974"
     ],
     "correct": 0,
-    "explanation": "1956. Before that year, workers loaded cargo piece by piece and a ship could wait a week. Many learners choose option {opt1}, because so much in this topic starts in 1945. If you give the wrong date for the container, you cannot explain why shipping became cheap.",
+    "explanation": "1956. Before that year, workers loaded cargo piece by piece and a ship could wait a week. Option {opt1} looks right, because so much in this topic starts in 1945. If you give the wrong date for the container, you cannot explain why shipping became cheap.",
     "id": 2,
     "slot": 2,
     "section": "What globalisation is",
@@ -689,7 +682,7 @@ const QUESTIONS = [
       "1950"
     ],
     "correct": 0,
-    "explanation": "1944, while the war was still being fought. Many learners choose option {opt1}, because so much else happened in 1945. The date matters for one reason. The rules were written before most of Africa and Asia were independent. That is the point Lesson 2 is built on, and you will need it there.",
+    "explanation": "1944, while the war was still being fought. Option {opt1} pulls, because so much else happened in 1945. The date matters for one reason. The rules were written before most of Africa and Asia were independent. That is the point Lesson 2 is built on, and you will need it there.",
     "id": 5,
     "slot": 5,
     "section": "The rules and the institutions",
@@ -704,7 +697,7 @@ const QUESTIONS = [
       "The World Social Forum"
     ],
     "correct": 0,
-    "explanation": "The World Trade Organisation. Many learners choose option {opt3}, because the two names are close and both are in this unit. One of them writes trade rules. The other was set up to oppose them. If you mix them up, your answer about protest will say the opposite of what you mean.",
+    "explanation": "The World Trade Organisation. Option {opt3} is easy to reach for, because the two names are close and both are in this unit. One of them writes trade rules. The other was set up to oppose them. If you mix them up, your answer about protest will say the opposite of what you mean.",
     "id": 6,
     "slot": 6,
     "section": "The rules and the institutions",
@@ -719,7 +712,7 @@ const QUESTIONS = [
       "To make sure the United States stayed the largest economy in the world"
     ],
     "correct": 0,
-    "explanation": "To stop the 1930s happening again. In that decade countries taxed each other's goods and trade collapsed. Option {opt1} is partly true of the World Bank, so many learners choose it. It is not the reason both bodies were set up. Why a body exists is half of any usefulness answer you write.",
+    "explanation": "To stop the 1930s happening again. In that decade countries taxed each other's goods and trade collapsed. Option {opt1} is partly true of the World Bank, which is what makes it tempting. It is not the reason both bodies were set up. Why a body exists is half of any usefulness answer you write.",
     "id": 7,
     "slot": 7,
     "section": "The rules and the institutions",
@@ -734,7 +727,7 @@ const QUESTIONS = [
       "The IMF gave the money as aid, so there was nothing to repay"
     ],
     "correct": 0,
-    "explanation": "The conditions were the whole thing. A government had to cut spending, sell state businesses and sell more abroad. Many learners choose option {opt1}, because the two bodies were founded together. If you take the conditions out, you cannot explain why this caused hardship.",
+    "explanation": "The conditions were the whole thing. A government had to cut spending, sell state businesses and sell more abroad. Option {opt1} sounds plausible, because the two bodies were founded together. If you take the conditions out, you cannot explain why this caused hardship.",
     "id": 8,
     "slot": 8,
     "section": "The rules and the institutions",
@@ -764,7 +757,7 @@ const QUESTIONS = [
       "The New Development Bank Group"
     ],
     "correct": 0,
-    "explanation": "The Forum on China-Africa Cooperation, usually shortened to FOCAC. Many learners choose option {opt1}, because both are Chinese programmes. One of them is a meeting. The other is a building programme that began thirteen years later. Keep them in order and you can show how the relationship changed.",
+    "explanation": "The Forum on China-Africa Cooperation, usually shortened to FOCAC. Option {opt1} is the trap, because both are Chinese programmes. One of them is a meeting. The other is a building programme that began thirteen years later. Keep them in order and you can show how the relationship changed.",
     "id": 10,
     "slot": 10,
     "section": "Africa and the new balance of power",
@@ -779,7 +772,7 @@ const QUESTIONS = [
       "Its currency could only be spent in countries outside Europe"
     ],
     "correct": 0,
-    "explanation": "Factories need materials coming in and buyers going out. Africa had both. Many learners choose option {opt1}, because Cold War aid really did have a political reason. After 1978 the reason is money. If you name the political reason first, you are describing the wrong decade.",
+    "explanation": "Factories need materials coming in and buyers going out. Africa had both. Option {opt1} pulls you, because Cold War aid really did have a political reason. After 1978 the reason is money. If you name the political reason first, you are describing the wrong decade.",
     "id": 11,
     "slot": 11,
     "section": "Africa and the new balance of power",
@@ -794,7 +787,7 @@ const QUESTIONS = [
       "That a country borrows from several lenders at the same time"
     ],
     "correct": 0,
-    "explanation": "It claims the lender lends more than the borrower can ever pay back, on purpose. Many learners choose option {opt2}, because rising interest rates do cause debt problems. That is not the claim. People argue about this phrase, so say that it is what critics claim when you use it.",
+    "explanation": "It claims the lender lends more than the borrower can ever pay back, on purpose. Option {opt2} sounds close, because rising interest rates do cause debt problems. That is not the claim. People argue about this phrase, so say that it is what critics claim when you use it.",
     "id": 12,
     "slot": 12,
     "section": "Africa and the new balance of power",
@@ -809,7 +802,7 @@ const QUESTIONS = [
       "Brazil, Russia, Iran, China and South Korea"
     ],
     "correct": 0,
-    "explanation": "Brazil, Russia, India, China and South Africa. Many learners choose option {opt3}, because Iran and South Korea are both large economies. Learn the five. South Africa being a member matters to you. It is the one place in this topic where your own country is inside the story.",
+    "explanation": "Brazil, Russia, India, China and South Africa. Option {opt3} looks plausible, because Iran and South Korea are both large economies. Learn the five. South Africa being a member matters to you. It is the one place in this topic where your own country is inside the story.",
     "id": 13,
     "slot": 13,
     "section": "Emerging economies and BRICS",
@@ -869,7 +862,7 @@ const QUESTIONS = [
       "It was moved there after protests made Europe too dangerous"
     ],
     "correct": 0,
-    "explanation": "The organisers chose the South on purpose. The meeting of rich countries they were answering is held in Switzerland. Many learners choose option {opt1}, because governments did stop some protests. Tell the marker the place was a choice. The choice was the argument the forum was making, so you need it.",
+    "explanation": "The organisers chose the South on purpose. The meeting of rich countries they were answering is held in Switzerland. Option {opt1} sounds plausible, because governments did stop some protests. Tell the marker the place was a choice. The choice was the argument the forum was making, so you need it.",
     "id": 17,
     "slot": 17,
     "section": "Responses to globalisation",
@@ -884,7 +877,7 @@ const QUESTIONS = [
       "The opposition all came from inside the developing countries alone"
     ],
     "correct": 0,
-    "explanation": "It was never one movement. People who wanted to change the system and people who wanted to end it marched in the same streets. Many learners choose option {opt2}, because the forums did try to bring them together. If you claim one aim, you cannot explain why nothing single came out of it.",
+    "explanation": "It was never one movement. People who wanted to change the system and people who wanted to end it marched in the same streets. Option {opt2} pulls, because the forums did try to bring them together. If you claim one aim, you cannot explain why nothing single came out of it.",
     "id": 18,
     "slot": 18,
     "section": "Responses to globalisation",
@@ -1139,10 +1132,23 @@ buildMenu();
 
 /* ---- MODE TOGGLE ---------------------------------------------------------
    Injects its own button so there is no stray markup, and lives inside the
-   single script block so a first-to-last script extraction still parses. */
+   single script block so a first-to-last script extraction still parses.
+
+   What is stored is the mode the learner chose, "light" or "dark". Never a
+   class name, and never "native". A source unit is built light and flips with
+   body.dark; an essay unit is built dark and flips with body.bright. Storing
+   the class name, or storing "native", meant the word saved on one unit did not
+   describe anything on the other, so a learner who chose dark and then opened a
+   unit built the other way round got whatever that file defaulted to. The
+   choice now travels with them across both kinds of unit.
+
+   To port this to an essay unit, set NATIVE to "dark", FLIP to "light" and CLS
+   to "bright". Nothing else changes. */
 (function(){
-  var NATIVE = "light";
-  try{ if(localStorage.getItem("kula-mode")==="dark"){ document.body.classList.add("dark"); } }catch(e){}
+  var NATIVE = "light";   // the mode this unit is designed in
+  var FLIP   = "dark";    // the mode the toggle offers
+  var CLS    = "dark";    // the class that produces FLIP in this unit
+  try{ if(localStorage.getItem("kula-mode")===FLIP){ document.body.classList.add(CLS); } }catch(e){}
   var SUN='<circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/>';
   var MOON='<path d="M20.5 14.6A8.6 8.6 0 0 1 9.4 3.5a8.6 8.6 0 1 0 11.1 11.1z"/>';
   var b=document.getElementById("kula-mode-toggle");
@@ -1154,17 +1160,17 @@ buildMenu();
   }
   var lab=document.getElementById("mode-label"), ic=document.getElementById("mode-icon");
   function paint(){
-    var onDark=document.body.classList.contains("dark");
-    var showing = onDark ? (NATIVE==="dark" ? "light" : "dark") : NATIVE;
+    var flipped = document.body.classList.contains(CLS);
+    var showing = flipped ? FLIP : NATIVE;
     var offering = showing==="dark" ? "light" : "dark";
     lab.textContent = offering==="light" ? "Light mode" : "Dark mode";
     ic.innerHTML = offering==="light" ? SUN : MOON;
-    b.setAttribute("aria-pressed", onDark ? "true" : "false");
+    b.setAttribute("aria-pressed", showing==="dark" ? "true" : "false");
     b.setAttribute("aria-label", "Switch to " + offering + " mode");
   }
   b.addEventListener("click",function(){
-    var onDark=document.body.classList.toggle("dark");
-    try{ localStorage.setItem("kula-mode", onDark ? "dark" : "native"); }catch(e){}
+    var flipped=document.body.classList.toggle(CLS);
+    try{ localStorage.setItem("kula-mode", flipped ? FLIP : NATIVE); }catch(e){}
     paint();
   });
   paint();
