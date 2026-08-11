@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What You Know Already | A New Global World Order: Globalisation | Kula Revise</title>
+<style>
+  /* ============================================================
+     KULA SOURCE ENGINE v3: TOKEN CONTRACT
+     This file is fixed mechanism. Do not edit it per series.
+     A skin sets the THIRTEEN identity variables in the block below
+     and nothing else is required of it.
+
+     Two accents, split by job:
+       --a1  accent one: navigation, progress, emphasis, option letters,
+             the primary button, the story date. The "structure" accent.
+       --a2  accent two: anything the learner earned. Correct answers,
+             the running summary, breakdown bars, key facts, the last
+             story line. The "reward" accent.
+     Set --a1-rgb / --a2-rgb to the SAME colours as r,g,b (no #), because
+     the tints, washes and shadows are built from them.
+     ============================================================ */
+
+  :root {
+    /* ---- THE IDENTITY CONTRACT. A skin overrides these thirteen. ---- */
+    --sand:  #F2E9D9;   /* page background */
+    --paper: #FBF6EB;   /* cards */
+    --cut:   #FFFCF4;   /* insets, sources, carousels */
+    --ink:   #1B2A33;   /* body text */
+    --clay:  #8C4A2F;   /* stage tags, quiet labels */
+    --fade:  #7B7263;   /* muted text, captions */
+    --a1: #B4622D;   --a1-rgb: 180,98,45;
+    --a2: #1F6B58;   --a2-rgb: 31,107,88;
+    --serif: Georgia, 'Times New Roman', serif;
+    --sans:  system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --mono:  var(--sans);
+
+    /* ---- DERIVED TOKENS. A skin should not need to touch these. ----
+       They exist because the engine used to hardcode fourteen literal
+       colours, which is what made every glossary definition and every
+       source expander invisible in dark mode. Everything below now
+       tracks the identity variables above, so a skin that sets --fade
+       and --ink correctly gets a readable dark mode for free. ---- */
+    --muted:      var(--fade);          /* secondary body text: kt-def, toggle-body, disc-body, cover-line */
+    --hair:       rgba(0,0,0,0.12);     /* progress track, quiet rules */
+    --hair-strong:rgba(0,0,0,0.28);     /* dashed divider inside an expander */
+    --on-ink:     var(--paper);         /* text sitting on an --ink ground */
+    --on-a1:      var(--paper);         /* text sitting on an --a1 ground */
+    --on-a2:      var(--paper);         /* text sitting on an --a2 ground */
+    --ink-deep:   #12202a;              /* --ink one step darker, button hover */
+    --a2-deep:    #164C3F;              /* --a2 one step darker, button hover */
+    --ok-bg:      rgba(var(--a2-rgb),0.13);  /* a correct option, a placed item */
+    --no-bg:      rgba(140,74,47,0.13);      /* a wrong option, a misplaced item */
+    /* Skill chips. a = the entry-level skill (Extract, Argue, Evidence, Recall).
+       b = the middle skill (Interpret, Understand). c = unassessed instinct.
+       The top skill (Evaluate, Weigh, Apply) sits on a solid accent ground. */
+    --chip-a-bg: rgba(var(--a1-rgb),0.16);  --chip-a-fg: var(--a1);
+    --chip-b-bg: rgba(var(--a2-rgb),0.16);  --chip-b-fg: var(--a2);
+    --chip-c-bg: rgba(0,0,0,0.06);
+    --scrim:  rgba(27,42,51,0.5);       /* modal backdrop */
+    --inset:  rgba(255,255,255,0.4);    /* sort column well */
+
+    /* Legacy aliases. Older skins and the quiz shell reference these. */
+    --copper: var(--a1);
+    --malachite: var(--a2);
+  }
+
+  /* ---- DARK MODE TOKEN RE-POINT ---------------------------------------
+     The skin supplies body.alt values for the thirteen identity variables.
+     Everything derived re-points here, once, for every unit. This is the
+     engine-level fix for the three defects logged in MOBILE_FIXES_HANDOVER:
+     a skin no longer needs the patch block at all.
+     ------------------------------------------------------------------- */
+  body.alt {
+    --muted:      var(--fade);
+    --hair:       rgba(255,255,255,0.14);
+    --hair-strong:rgba(255,255,255,0.26);
+    --on-ink:     var(--sand);
+    --on-a1:      var(--sand);
+    --on-a2:      var(--sand);
+    --ink-deep:   var(--ink);
+    --a2-deep:    var(--a2);
+    --ok-bg:      rgba(var(--a2-rgb),0.20);
+    --no-bg:      rgba(var(--a1-rgb),0.18);
+    --chip-a-bg:  rgba(var(--a1-rgb),0.22);  --chip-a-fg: var(--ink);
+    --chip-b-bg:  rgba(var(--a2-rgb),0.22);  --chip-b-fg: var(--ink);
+    --chip-c-bg:  rgba(255,255,255,0.10);
+    --scrim:  rgba(0,0,0,0.62);
+    --inset:  rgba(255,255,255,0.05);
+  }
+  /* Key term chips keep a visible edge once the ground inverts. */
+  body.alt .kt-term { border-color: var(--hair-strong); }
+  body.alt .kt-term summary { color: var(--ink); }
+  body.alt .kt-label { border-top-color: var(--hair-strong); }
+  /* v2 dimmed the options a learner did not pick; at 0.45 they vanish on a dark ground. */
+  body.alt .option.dimmed, body.alt .option-btn.dimmed { opacity: 0.72; }
+
+  /* ---- MODE TOGGLE. Fixed bottom right, 44px minimum tap target. ---- */
+  .mode-toggle {
+    position: fixed; bottom: 0.9rem; right: 0.9rem; z-index: 40;
+    display: flex; align-items: center; gap: 0.4rem;
+    font-family: var(--sans); font-size: 0.66rem; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 0.62rem 0.75rem; min-height: 44px;
+    background: var(--paper); color: var(--fade);
+    border: 1px solid var(--hair-strong); cursor: pointer;
+    box-shadow: 0 2px 12px var(--scrim);
+  }
+  .mode-toggle:hover { color: var(--ink); border-color: var(--a1); }
+  .mode-toggle:focus-visible { outline: 2px solid var(--a1); outline-offset: 2px; }
+  .mode-toggle svg { width: 0.9rem; height: 0.9rem; fill: none; stroke: currentColor; stroke-width: 1.6; }
+  @media (max-width: 520px) {
+    .mode-toggle { min-height: 44px; padding: 0.62rem 0.7rem; font-size: 0.64rem; }
+  }
+  @media print { .mode-toggle { display: none; } }
+
+  /* ---- STICKY HEADER AT 360px --------------------------------------
+     .top-meta is a flex row and flex children default to min-width auto,
+     so at 360px the eyebrow and the step counter used to overlap. The
+     eyebrow now takes the free space and truncates rather than pushing
+     the counter off. Renders correctly at 375px and above either way,
+     which is why this was missed. 360 is common on mid-range Android.
+     ----------------------------------------------------------------- */
+  .top-meta { gap: 0.7rem; flex-wrap: nowrap; }
+  .top-meta > * { min-width: 0; }
+  .top-meta #lesson-tag, .top-meta .top-label {
+    flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .top-meta .top-count { flex: 0 0 auto; white-space: nowrap; }
+  @media (max-width: 380px) {
+    .top-meta { font-size: 0.62rem; letter-spacing: 0.09em; }
+  }
+
+/* GLOBALISATION: container yard
+   Checked against the identity register before designing. Vietnam holds cream
+   paper, a serif and soft rounded cards. USA 1920s holds near-black deco. Black
+   Power holds the placard press. Civil Rights holds counter and column. Congo
+   holds ore seam. Black Consciousness holds frank talk on manila. Cold War
+   origins holds zone: cold paper, a 45 degree hatch, cards bounded top and left,
+   condensed sans headings over a serif body.
+
+   Container yard takes the metaphor the topic supplies. A port stacks identical
+   steel boxes in rows, and what is inside them is invisible from the outside.
+   Cool grey ground, container orange for structure, sea teal for anything the
+   learner earned.
+
+   Signature moves, each chosen because nothing else on the register uses it:
+     - a square dot grid ground, where zone hatches at 45 degrees
+     - cards fully bounded by a hairline with one solid bar down the left edge,
+       the painted stripe on a container end. Zone leaves its cards open
+     - serif headings over a sans body, which inverts zone exactly
+     - labels are outlined, not filled, and each carries a leading square node
+     - a source is a docket: reversed-out mono header bar over a cut ground
+     - mono appears on the source header and nowhere else */
+
+:root {
+  --sand:  #ECEEF0;   /* page: cold grey */
+  --paper: #F8FAFB;   /* cards */
+  --cut:   #E1E6E9;   /* insets, sources, carousels */
+  --ink:   #14202A;
+  --clay:  #4C5A63;   /* stage tags, quiet labels */
+  --fade:  #5F6B73;
+  /* container orange for structure, sea teal for reward */
+  --a1: #BC4E1B;  --a1-rgb: 188,78,27;
+  --a2: #0F6469;  --a2-rgb: 15,100,105;
+  --sans:  system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --serif: Georgia, 'Times New Roman', serif;
+  --mono:  ui-monospace, 'Cascadia Code', Consolas, 'Courier New', monospace;
+}
+
+/* Ground: a square dot grid. Containers stacked in rows, seen from above. */
+body {
+  font-family: var(--sans) !important;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(20,32,42,0.10) 1px, transparent 1.6px) !important;
+  background-size: 22px 22px !important;
+}
+h1, h2, h3 {
+  font-family: var(--serif) !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.005em !important;
+}
+
+/* Cards: hairline box with one solid bar down the left. A painted stripe. */
+.card, .stat-wrap, .carousel, .kt {
+  border: 1px solid var(--hair) !important;
+  border-left: 7px solid var(--a1) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: var(--paper) !important;
+}
+
+/* Labels: outlined plates with a leading square node. Nothing filled. */
+.stage-tag, .kt-label, .expl-label, .pop-label, .runsum-label, .breakdown-label {
+  font-family: var(--sans) !important;
+  background: transparent !important;
+  color: var(--a2) !important;
+  border: 1px solid rgba(var(--a2-rgb),0.45) !important;
+  border-radius: 0 !important;
+  display: inline-block !important;
+  padding: 0.3rem 0.6rem 0.3rem 0.55rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.16em !important;
+  font-size: 0.63rem !important;
+  font-weight: 700 !important;
+}
+.stage-tag::before, .kt-label::before, .expl-label::before, .pop-label::before {
+  content: "";
+  display: inline-block;
+  width: 6px; height: 6px;
+  background: var(--a1);
+  margin-right: 0.5rem;
+  vertical-align: 1px;
+}
+
+/* A source is a docket: reversed-out mono header over a cut ground. */
+.source {
+  background: var(--cut) !important;
+  border: 1px solid var(--hair-strong) !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+}
+.source-attr {
+  font-family: var(--mono) !important;
+  background: var(--ink) !important;
+  color: var(--paper) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  display: block !important;
+  padding: 0.7rem 0.9rem !important;
+  font-size: 0.72rem !important;
+  line-height: 1.5 !important;
+  letter-spacing: 0.01em !important;
+  text-transform: none !important;
+}
+.source-body { padding: 1.1rem 1rem 0.4rem !important; }
+.source .toggle-btn { margin: 0 1rem 1rem !important; border-radius: 0 !important; }
+.source .toggle-body { padding: 0 1rem 1rem !important; }
+
+/* Options: square, with the letter in a hard orange node. */
+.option, .option-btn { border-radius: 0 !important; }
+.option-letter, .opt-letter { border-radius: 0 !important; }
+
+/* Buttons: square, no rounding anywhere. */
+.btn-primary, .btn-secondary, .btn-begin, .pop-btn, .toggle-btn, .secondary-btn {
+  border-radius: 0 !important;
+}
+
+/* Dividers: a dashed route line with a node sitting on it. */
+.rule, .cover-rule, .flourish, .story-rule {
+  background: none !important;
+  height: 9px !important;
+  background-image:
+    linear-gradient(90deg, transparent 0 0),
+    repeating-linear-gradient(90deg, var(--a1) 0 7px, transparent 7px 14px) !important;
+  background-position: left center !important;
+  background-repeat: repeat-x !important;
+  background-size: auto 1px !important;
+}
+
+/* Cover flourish: three offset squares, containers seen end on. */
+.cover-rule { position: relative; }
+
+.stat-num { color: var(--a1) !important; font-family: var(--serif) !important; font-weight: 700 !important; }
+.stat-label { color: var(--clay) !important; font-family: var(--sans) !important; }
+
+
+/* ---- DARK MODE ------------------------------------------------------------
+   The yard at night. The dot grid stays, lit rather than printed. */
+body.alt {
+  --sand:  #101619;
+  --paper: #192227;
+  --cut:   #212C32;
+  --ink:   #E9EFF2;
+  --clay:  #A3B0B8;
+  --fade:  #93A0A8;
+  --a1: #E8834A;  --a1-rgb: 232,131,74;
+  --a2: #55B7BC;  --a2-rgb: 85,183,188;
+}
+body.alt {
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(233,239,242,0.11) 1px, transparent 1.6px) !important;
+  background-size: 22px 22px !important;
+}
+body.alt .card, body.alt .stat-wrap, body.alt .carousel, body.alt .kt {
+  border-color: rgba(233,239,242,0.16) !important;
+  border-left-color: var(--a1) !important;
+}
+body.alt .source { background: var(--cut) !important; border-color: rgba(233,239,242,0.22) !important; }
+body.alt .source-attr { background: #0B1215 !important; color: #E9EFF2 !important; }
+body.alt .stage-tag, body.alt .kt-label, body.alt .expl-label,
+body.alt .pop-label, body.alt .runsum-label, body.alt .breakdown-label {
+  color: #8FD3D7 !important; border-color: rgba(85,183,188,0.55) !important; background: transparent !important;
+}
+body.alt .btn-begin { background: var(--a1) !important; border-color: var(--a1) !important; color: #101619 !important; }
+body.alt .btn-begin:hover { background: #F09A67 !important; border-color: #F09A67 !important; }
+body.alt .mode-toggle { background: #232E35 !important; color: #C7D2D8 !important; border-color: rgba(233,239,242,0.22) !important; box-shadow: 0 2px 10px rgba(0,0,0,0.45) !important; }
+body.alt .mode-toggle:hover { color: #E9EFF2 !important; border-color: rgba(233,239,242,0.40) !important; }
+body.alt .rule, body.alt .cover-rule, body.alt .flourish, body.alt .story-rule {
+  background-image: repeating-linear-gradient(90deg, var(--a1) 0 7px, transparent 7px 14px) !important;
+}
+body.alt .chip { background: rgba(232,131,74,0.18) !important; color: #F6C6A6 !important; }
+body.alt .chip-recall,     body.alt .chip-extract   { background: rgba(232,131,74,0.22) !important; color: #F8D3BA !important; }
+body.alt .chip-understand, body.alt .chip-interpret { background: rgba(85,183,188,0.22) !important; color: #B9E6E8 !important; }
+body.alt .chip-apply,      body.alt .chip-evaluate  { background: rgba(233,239,242,0.18) !important; color: #E9EFF2 !important; }
+
+/* ---- DARK MODE STATE COLOURS ---------------------------------------------- */
+body.alt .option, body.alt .option-btn {
+  background: var(--cut) !important;
+  border-color: rgba(233,239,242,0.22) !important;
+  color: var(--ink) !important;
+}
+body.alt .option.selected, body.alt .option-btn.selected {
+  background: rgba(85,183,188,0.18) !important; border-color: #55B7BC !important; }
+body.alt .option.correct, body.alt .option-btn.correct {
+  background: rgba(85,183,188,0.24) !important; border-color: #55B7BC !important; color: var(--ink) !important; }
+body.alt .option.wrong, body.alt .option-btn.wrong {
+  background: rgba(232,131,74,0.20) !important; border-color: #E8834A !important; color: var(--ink) !important; }
+body.alt .secondary-btn:hover:not(:disabled) { background: var(--cut) !important; }
+body.alt .explanation { background: var(--cut) !important; border-color: rgba(85,183,188,0.30) !important; }
+body.alt .expl-text { color: var(--ink) !important; }
+body.alt .quiz-foot, body.alt .quiz-foot a { color: var(--clay) !important; }
+
+/* The dimmed state fell below readable contrast at 360px. Raised in both modes. */
+.option.dimmed, .option-btn.dimmed { opacity: 0.82 !important; }
+body.alt .option.dimmed, body.alt .option-btn.dimmed { opacity: 0.86 !important; }
+
+/* Button hover must not read as a different colour family. */
+.btn-primary:hover:not(:disabled) { background: #0B4B4F !important; }
+body.alt .btn-primary:hover:not(:disabled) { background: #6FC7CB !important; color: #101619 !important; }
+
+/* The toggle is a rounded pill on a white ground, the one round thing in a
+   skin of hard edges. It is fixed bottom right and lands on Continue on a
+   short viewport. */
+.mode-toggle {
+  bottom: 1rem; right: 1rem;
+  border-radius: 999px !important;
+  font-family: var(--sans) !important;
+  background: #FFFFFF !important;
+  color: #4C5A63 !important;
+  border: 1px solid rgba(20,32,42,0.14) !important;
+  padding: 0.62rem 1.05rem !important;
+  gap: 0.5rem !important;
+  letter-spacing: 0.14em !important;
+  box-shadow: 0 2px 10px rgba(20,32,42,0.10) !important;
+}
+.mode-toggle:hover { color: #14202A !important; border-color: rgba(20,32,42,0.30) !important; }
+.mode-toggle svg { width: 0.95rem !important; height: 0.95rem !important; stroke-width: 1.8 !important; }
+body { padding-bottom: 4.5rem !important; }
+@media (max-width: 520px) {
+  .mode-toggle { bottom: 0.7rem; right: 0.7rem; padding: 0.45rem 0.6rem; font-size: 0.6rem; }
+  .card, .stat-wrap, .carousel, .kt { border-left-width: 5px !important; }
+}
+
+/* Figures. Caption reads left at a measure that holds on a phone. */
+.figure figcaption {
+  text-align: left !important;
+  max-width: 34rem;
+  margin-left: auto; margin-right: auto;
+  font-family: var(--sans) !important;
+  font-size: 0.82rem !important;
+  color: var(--clay) !important;
+  border-top: 2px solid var(--a1);
+  padding-top: 0.6rem;
+}
+.figure img { border: 1px solid rgba(188,78,27,0.35) !important; border-radius: 0 !important; width: 100%; height: auto; }
+body.alt .figure img { border-color: rgba(232,131,74,0.40) !important; filter: brightness(0.92) contrast(1.02); }
+body.alt .figure figcaption { border-top-color: var(--a1); }
+
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    min-height: 100vh;
+    background:
+      repeating-linear-gradient(90deg, var(--hair) 0 1px, transparent 1px 5px),
+      radial-gradient(ellipse at top right, rgba(var(--a1-rgb),0.10) 0%, transparent 58%),
+      radial-gradient(ellipse at bottom left, rgba(var(--a2-rgb),0.09) 0%, transparent 58%),
+      var(--sand);
+    padding: 2rem 1rem 3rem;
+    font-family: var(--serif);
+    color: var(--ink); line-height: 1.6; -webkit-text-size-adjust: 100%;
+    -webkit-user-select: none; user-select: none;
+  }
+  .container { max-width: 780px; margin: 0 auto; }
+  .header-block { text-align: center; margin-bottom: 2rem; padding: 1.4rem 0 1.2rem; position: relative; }
+  .header-block::before {
+    content: ""; position: absolute; z-index: 0; top: 0; left: 50%; transform: translateX(-50%);
+    width: 260px; height: 92px; pointer-events: none;
+    background: repeating-radial-gradient(circle at 50% 100%, rgba(var(--a1-rgb),0.30) 0 2px, transparent 2px 15px);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 92%);
+    mask-image: linear-gradient(to bottom, #000 0%, transparent 92%);
+  }
+  .eyebrow { font-family: var(--sans); position: relative; z-index: 1; font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--clay); font-weight: 700; margin-bottom: 0.9rem; }
+  .masthead { position: relative; z-index: 1; font-size: clamp(2.2rem,6.4vw,3.4rem); font-weight: 800; line-height: 1.04; letter-spacing: -0.025em; }
+  .sub { position: relative; z-index: 1; font-size: 1rem; color: var(--fade); margin-top: 0.6rem; }
+  .rule { width: 92px; height: 9px; margin: 1.6rem auto 0;
+    background:
+      radial-gradient(circle at 9px 4.5px, var(--a1) 0 4px, transparent 4.5px),
+      radial-gradient(circle at 46px 4.5px, var(--a1) 0 4px, transparent 4.5px),
+      radial-gradient(circle at 83px 4.5px, var(--a1) 0 4px, transparent 4.5px); }
+  .intro-box { background: var(--paper); border: 1px solid var(--hair); border-left: 5px solid var(--a2); padding: 1.4rem 1.6rem; margin-bottom: 2rem; }
+  .intro-label { font-family: var(--sans); font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--a2); font-weight: 700; margin-bottom: 0.6rem; }
+  .intro-text { line-height: 1.68; font-size: 1rem; }
+  .key-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.8rem; margin-bottom: 2.2rem; }
+  .key-item { display: flex; flex-direction: column; gap: 0.45rem; padding: 0.85rem; background: var(--paper); border: 1px solid var(--hair); }
+  .chip { font-family: var(--sans); display: inline-block; padding: 0.22rem 0.7rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; width: fit-content; }
+  .chip-recall { background: var(--chip-a-bg); color: var(--chip-a-fg); }
+  .chip-understand { background: var(--chip-b-bg); color: var(--chip-b-fg); }
+  .chip-apply { background: var(--ink); color: var(--on-ink); }
+  .key-desc { font-size: 0.83rem; color: var(--fade); }
+  .sections-label { font-family: var(--sans); font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--fade); text-align: center; margin-bottom: 1.2rem; font-weight: 700; }
+  .primary-btn { font-family: var(--sans); width: 100%; display: flex; align-items: center; gap: 1rem; padding: 1.3rem 1.5rem; background: var(--ink); color: var(--on-ink); border: none; cursor: pointer; font-family: inherit; text-align: left; transition: all 0.2s; margin-bottom: 1rem; }
+  .primary-btn:hover { background: var(--ink-deep); transform: translateX(4px); }
+  .btn-num { font-family: var(--sans); font-size: 1.4rem; color: var(--a1); font-weight: 800; min-width: 35px; }
+  .btn-txt { flex: 1; display: flex; flex-direction: column; gap: 0.2rem; }
+  .btn-title { font-family: var(--sans); font-size: 1.15rem; font-weight: 700; }
+  .btn-sub { font-family: var(--sans); font-size: 0.82rem; color: var(--muted); }
+  .btn-arrow { font-size: 1.3rem; color: var(--a1); }
+  .section-list { display: flex; flex-direction: column; gap: 0.5rem; }
+  .section-btn { display: flex; align-items: center; gap: 1rem; padding: 0.95rem 1.1rem; background: transparent; border: 1px solid var(--hair-strong); cursor: pointer; font-family: inherit; text-align: left; transition: all 0.2s; color: var(--ink); }
+  .section-btn:hover { background: var(--paper); border-color: var(--a1); }
+  .section-roman { font-family: var(--sans); color: var(--a1); font-weight: 800; min-width: 35px; font-size: 0.95rem; }
+  .section-name { flex: 1; font-size: 0.95rem; }
+  .section-count { font-size: 0.78rem; color: var(--fade); letter-spacing: 0.05em; }
+  .footer { text-align: center; font-size: 0.79rem; color: var(--fade); margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--hair); line-height: 1.6; }
+
+  .quiz-top { margin-bottom: 1.5rem; }
+  .quiz-eyebrow { font-family: var(--sans); display: flex; justify-content: space-between; align-items: baseline; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--a2); font-weight: 700; margin-bottom: 0.55rem; gap: 1rem; }
+  .quiz-progress { color: var(--fade); font-weight: 500; letter-spacing: 0.04em; text-transform: none; }
+  .progress-track { height: 3px; background: var(--hair); overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--a1); transition: width 0.35s ease; }
+  .quiz-card { background: var(--paper); border: 1px solid var(--hair); border-left: 5px solid var(--a1); padding: 1.7rem 1.5rem; margin-bottom: 1.3rem; }
+  .quiz-meta { display: flex; gap: 0.6rem; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; }
+  .section-tag { font-family: var(--sans); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay); font-weight: 700; }
+  .question-text { font-size: 1.24rem; line-height: 1.4; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 1.3rem; }
+  .options { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.2rem; }
+  .option-btn { display: flex; align-items: flex-start; gap: 0.85rem; padding: 1rem 1.05rem; background: var(--sand); border: 1px solid var(--hair); cursor: pointer; font-family: inherit; text-align: left; font-size: 0.97rem; line-height: 1.55; color: var(--ink); transition: all 0.18s; width: 100%; }
+  .option-btn:hover:not(:disabled) { background: var(--cut); border-color: var(--a1); }
+  .option-btn:disabled { cursor: default; }
+  .option-btn.selected { background: var(--cut); border-color: var(--a1); border-width: 2px; padding: 0.94rem 0.99rem; }
+  .option-btn.correct { background: var(--ok-bg); border-color: var(--a2); border-width: 2px; padding: 0.94rem 0.99rem; }
+  .option-btn.wrong { background: var(--no-bg); border-color: var(--clay); border-width: 2px; padding: 0.94rem 0.99rem; }
+  .option-btn.dimmed { opacity: 0.48; }
+  body.alt .option-btn.dimmed { opacity: 0.72; }
+  .opt-letter { font-weight: 800; color: var(--a1); min-width: 1.1rem; }
+  .opt-text { flex: 1; }
+  .opt-mark { font-weight: 700; font-size: 1.1rem; }
+  .explanation { background: var(--cut); border: 1px solid var(--hair); border-left: 5px solid var(--a2); padding: 1.15rem 1.2rem; margin-bottom: 0.3rem; }
+  .expl-label { font-size: 0.66rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--a2); font-weight: 700; margin-bottom: 0.5rem; }
+  .expl-text { line-height: 1.68; font-size: 0.95rem; }
+  .quiz-actions { display: flex; justify-content: space-between; gap: 0.8rem; margin-top: 1.2rem; }
+  .secondary-btn { padding: 0.8rem 1.2rem; background: transparent; border: 1px solid var(--hair-strong); color: var(--ink); font-family: inherit; font-size: 0.92rem; font-weight: 600; cursor: pointer; }
+  .secondary-btn:hover:not(:disabled) { background: var(--paper); }
+  .secondary-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+  .primary-btn-small { padding: 0.85rem 1.5rem; background: var(--a2); border: none; color: var(--on-a2); font-family: inherit; font-size: 0.95rem; cursor: pointer; font-weight: 700; }
+  .primary-btn-small:hover:not(:disabled) { background: var(--a2-deep); }
+  .primary-btn-small:disabled { opacity: 0.35; cursor: not-allowed; }
+  .quiz-foot { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+  .link-btn { background: transparent; border: none; color: var(--fade); font-family: inherit; font-size: 0.85rem; cursor: pointer; text-decoration: underline; }
+  .score-tally { font-size: 0.82rem; color: var(--fade); font-weight: 600; }
+
+  .score-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.9rem; margin-bottom: 1.4rem; }
+  .score-block { background: var(--paper); border: 1px solid var(--hair); border-top: 4px solid var(--a1); padding: 1.3rem 0.8rem; text-align: center; }
+  .score-num { font-size: 2.6rem; font-weight: 800; color: var(--ink); line-height: 1; letter-spacing: -0.03em; }
+  .score-num.red { color: var(--clay); }
+  .score-den { font-size: 1.1rem; color: var(--fade); font-weight: 500; }
+  .score-label { font-family: var(--sans); font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--fade); margin-top: 0.5rem; font-weight: 700; }
+  .compare-line { text-align: center; font-weight: 700; color: var(--a2); background: var(--paper); border: 1px solid rgba(var(--a2-rgb),0.25); padding: 0.9rem 1rem; margin-bottom: 1.5rem; }
+  .score-word { font-family: var(--sans); font-size: 1.3rem; font-weight: 800; color: var(--a2); line-height: 2; letter-spacing: -0.01em; }
+  .grade-desc { text-align: center; margin-bottom: 1.6rem; padding: 0 0.5rem; line-height: 1.65; }
+  .breakdown { background: var(--paper); border: 1px solid var(--hair); padding: 1.3rem; margin-bottom: 1.4rem; }
+  .breakdown-label { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--a2); font-weight: 700; margin-bottom: 1rem; text-align: center; }
+  .breakdown-row { display: grid; grid-template-columns: 1fr 96px 44px; gap: 0.7rem; align-items: center; margin-bottom: 0.7rem; font-size: 0.86rem; }
+  .breakdown-name { font-weight: 600; }
+  .breakdown-bar { height: 9px; background: var(--hair); overflow: hidden; }
+  .breakdown-fill { height: 100%; background: var(--a1); transition: width 0.4s; }
+  .breakdown-score { color: var(--fade); text-align: right; font-weight: 700; }
+  .review-all-label { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--fade); font-weight: 700; margin-bottom: 1rem; text-align: center; }
+  .review-card { background: var(--paper); border: 1px solid var(--hair); padding: 1.1rem 1.2rem; margin-bottom: 0.8rem; border-left: 4px solid var(--fade); }
+  .review-card.got { border-left-color: var(--a2); }
+  .review-card.missed { border-left-color: var(--clay); }
+  .review-q { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; line-height: 1.4; }
+  .review-a { font-size: 0.88rem; line-height: 1.55; margin-bottom: 0.3rem; }
+  .review-a .lab { font-weight: 700; }
+  .review-a.yours-wrong { color: var(--clay); }
+  .review-a.right { color: var(--a2); }
+  .review-actions { margin-top: 1.6rem; }
+  .hidden { display: none !important; }
+
+
+  /* v2.1 finish pop-up, matched to the lesson engine so a learner meets the
+     same closing screen in all seven files of a unit. */
+  .pop-back { position: fixed; inset: 0; background: var(--scrim); display: flex;
+    align-items: center; justify-content: center; padding: 1.2rem; z-index: 90; }
+  .pop { background: var(--paper); border: 1px solid var(--hair); max-width: 26rem;
+    width: 100%; padding: 1.4rem 1.3rem; text-align: center; }
+  .pop-label { font-family: var(--sans); font-size: 0.62rem; letter-spacing: 0.15em;
+    text-transform: uppercase; font-weight: 700; color: var(--a1); }
+  .pop-text { font-size: 0.95rem; line-height: 1.6; color: var(--ink); margin: 0.5rem 0 1.1rem; }
+  .pop-btn { font-family: var(--sans); font-size: 0.78rem; font-weight: 700;
+    letter-spacing: 0.09em; text-transform: uppercase; min-height: 44px; padding: 0.6rem 1.4rem;
+    cursor: pointer; background: transparent; color: var(--muted);
+    border: 1px solid var(--hair); border-radius: 0; }
+  .review-actions { display: grid; gap: 0.7rem; }
+
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- MENU -->
+  <div id="menu-screen">
+    <div class="header-block">
+      <div class="eyebrow">Kula Revise &middot; Grade 12 &middot; Globalisation</div>
+      <h1 class="masthead">What You Know Already</h1>
+      <div class="sub" id="masthead-sub">Before Lesson 1</div>
+      <div class="rule"></div>
+    </div>
+    <div class="intro-box">
+      <div class="intro-label">Before you start</div>
+      <p class="intro-text"><span id="intro-body"></span></p>
+    </div>
+    <div class="key-row">
+      <div class="key-item"><span class="chip chip-recall">Recall</span><span class="key-desc">The fact itself: a date, name or policy</span></div>
+      <div class="key-item"><span class="chip chip-understand">Understand</span><span class="key-desc">What the fact means or why it happened</span></div>
+      <div class="key-item"><span class="chip chip-apply">Apply</span><span class="key-desc">Spot what is wrong with a claim</span></div>
+    </div>
+    <div>
+      <div class="sections-label">Choose what to answer</div>
+      <button class="primary-btn" data-filter="all">
+        <span class="btn-num">I.</span>
+        <span class="btn-txt"><span class="btn-title">Full check</span><span class="btn-sub">All 18 questions &middot; all 5 sections</span></span>
+        <span class="btn-arrow">&rarr;</span>
+      </button>
+      <div class="section-list" id="section-list"></div>
+    </div>
+    <div class="footer">About 12 minutes for the full set. Write your score down at the end.</div>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="quiz-screen" class="hidden">
+    <div class="quiz-top">
+      <div class="quiz-eyebrow"><span id="quiz-section-name"></span><span class="quiz-progress" id="quiz-progress"></span></div>
+      <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width: 0%"></div></div>
+    </div>
+    <div class="quiz-card">
+      <div class="quiz-meta"><span class="section-tag" id="section-tag"></span><span class="chip" id="difficulty-chip"></span></div>
+      <h2 class="question-text" id="question-text"></h2>
+      <div class="options" id="options-container"></div>
+      <div class="explanation hidden" id="explanation"><div class="expl-label">Why</div><div class="expl-text" id="expl-text"></div></div>
+      <div class="quiz-actions">
+        <button class="secondary-btn" id="prev-btn">&larr; Previous</button>
+        <button class="primary-btn-small" id="action-btn">Submit answer</button>
+      </div>
+    </div>
+    <div class="quiz-foot">
+      <button class="link-btn" id="exit-btn">Exit to menu</button>
+      <span class="score-tally" id="score-tally">Score so far: 0 / 0</span>
+    </div>
+  </div>
+
+  <!-- REVIEW -->
+  <div id="review-screen" class="hidden">
+    <div class="header-block">
+      <div class="eyebrow">Before the lessons</div>
+      <h1 class="masthead" style="font-size: clamp(1.9rem,5vw,2.8rem);">Where You Stand</h1>
+      <div class="rule"></div>
+    </div>
+    <div class="score-row">
+      <div class="score-block"><div class="score-num"><span id="score-correct">0</span><span class="score-den">/<span id="score-total">0</span></span></div><div class="score-label">Correct</div></div>
+      <div class="score-block"><div class="score-num"><span id="score-percent">0</span><span class="score-den">%</span></div><div class="score-label">Accuracy</div></div>
+      <div class="score-block"><div class="score-word" id="score-grade">-</div><div class="score-label">Band</div></div>
+    </div>
+    <div class="grade-desc" id="grade-desc"></div>
+    <p class="compare-line hidden" id="compare-line"></p>
+    <div class="breakdown"><div class="breakdown-label">By tier</div><div id="level-rows"></div></div>
+    <div class="breakdown"><div class="breakdown-label">By section</div><div id="breakdown-rows"></div></div>
+    <div><div class="review-all-label">Every question</div><div id="review-cards"></div></div>
+    <div class="review-actions">
+      <button class="primary-btn" id="restart-btn"><span class="btn-txt"><span class="btn-title">Return to menu</span><span class="btn-sub">Try another section or retake the full test</span></span><span class="btn-arrow">&#8635;</span></button>
+      <button class="primary-btn" id="finish-btn"><span class="btn-txt"><span class="btn-title">Finish</span><span class="btn-sub">Then tap Done to continue</span></span><span class="btn-arrow">&rarr;</span></button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* kula: re-entry guard. Every declaration below is function scoped, so a
+   viewer that re-runs this script re-initialises instead of throwing a
+   redeclaration SyntaxError. */
+(function(){
+const MODE = "a";
+const DONE_LABEL = "Check complete";
+const DONE_TITLE = "What You Know Already";
+const DONE_TEXT  = "Tap Done to continue to Lesson 1, The World Gets Smaller.";
+const INTRO = "This checks recall: the dates, names, figures and terms the globalisation questions are built from. Take it before Lesson 1. A low score here is the normal starting point and not a warning, so do not worry about the number. Every question tells you why the answer is right. Write your score down at the end so you can compare it after Lesson 5.";
+const SECTIONS = [
+  "What globalisation is",
+  "The rules and the institutions",
+  "Africa and the new balance of power",
+  "Emerging economies and BRICS",
+  "Responses to globalisation"
+];
+const QUESTIONS = [
+  {
+    "question": "Which four things does globalisation move across borders faster than before?",
+    "options": [
+      "Goods, money, people and ideas",
+      "Goods, money, workers and laws",
+      "Goods, banks, people and armies",
+      "Goods, money, people and borders"
+    ],
+    "correct": 0,
+    "explanation": "Goods, money, people and ideas. All four of them. The fourth one is the one people forget. Many learners choose option {opt3}, because ideas cannot be seen and a ship can. If you leave ideas out, you cannot explain the cultural side of this topic. A definition that names only trade will lose you marks.",
+    "id": 1,
+    "slot": 1,
+    "section": "What globalisation is",
+    "tier": "Recall"
+  },
+  {
+    "question": "In which year did the first container ship sail?",
+    "options": [
+      "1956",
+      "1945",
+      "1968",
+      "1974"
+    ],
+    "correct": 0,
+    "explanation": "1956. Before that year, workers loaded cargo piece by piece and a ship could wait a week. Many learners choose option {opt1}, because so much in this topic starts in 1945. If you give the wrong date for the container, you cannot explain why shipping became cheap.",
+    "id": 2,
+    "slot": 2,
+    "section": "What globalisation is",
+    "tier": "Recall"
+  },
+  {
+    "question": "Why did the container matter so much to world trade?",
+    "options": [
+      "It cut the cost and the time of moving goods between countries",
+      "It kept cargo dry at sea so that fewer goods were damaged",
+      "It allowed ports to employ many more workers than before",
+      "It made ships larger so harbours had to be rebuilt bigger"
+    ],
+    "correct": 0,
+    "explanation": "It made moving goods cheaper and faster, so distance stopped mattering so much. Option {opt1} is true, but it is a small point. Option {opt2} is the opposite of what happened. If you give a small reason instead of the main one, you will not reach the top marks.",
+    "id": 3,
+    "slot": 3,
+    "section": "What globalisation is",
+    "tier": "Understand"
+  },
+  {
+    "question": "A learner writes: globalisation began in 1956 when the first container ship sailed. What is wrong?",
+    "options": [
+      "Trade between countries is far older than 1956",
+      "The first container ship actually sailed in 1945",
+      "Container ships were not used for trade until 1968",
+      "Globalisation began with the internet and not with ships"
+    ],
+    "correct": 0,
+    "explanation": "Trade between countries is hundreds of years old, so nothing began in 1956. What changed was the speed. Option {opt3} makes the same mistake with a different date. If you treat globalisation as an event with a starting date, you will lose marks on a define question.",
+    "id": 4,
+    "slot": 4,
+    "section": "What globalisation is",
+    "tier": "Apply"
+  },
+  {
+    "question": "In which year was the conference that created the IMF and the World Bank?",
+    "options": [
+      "1944",
+      "1945",
+      "1947",
+      "1950"
+    ],
+    "correct": 0,
+    "explanation": "1944, while the war was still being fought. Many learners choose option {opt1}, because so much else happened in 1945. The date matters for one reason. The rules were written before most of Africa and Asia were independent. That is the point Lesson 2 is built on, and you will need it there.",
+    "id": 5,
+    "slot": 5,
+    "section": "The rules and the institutions",
+    "tier": "Recall"
+  },
+  {
+    "question": "What replaced GATT in 1995?",
+    "options": [
+      "The World Trade Organisation",
+      "The World Economic Forum",
+      "The International Monetary Fund",
+      "The World Social Forum"
+    ],
+    "correct": 0,
+    "explanation": "The World Trade Organisation. Many learners choose option {opt3}, because the two names are close and both are in this unit. One of them writes trade rules. The other was set up to oppose them. If you mix them up, your answer about protest will say the opposite of what you mean.",
+    "id": 6,
+    "slot": 6,
+    "section": "The rules and the institutions",
+    "tier": "Recall"
+  },
+  {
+    "question": "Why were the IMF and the World Bank set up in the first place?",
+    "options": [
+      "To stop the collapse of trade of the 1930s from happening again",
+      "To rebuild the countries that had been damaged during the war",
+      "To lend money to the colonies that were about to become independent",
+      "To make sure the United States stayed the largest economy in the world"
+    ],
+    "correct": 0,
+    "explanation": "To stop the 1930s happening again. In that decade countries taxed each other's goods and trade collapsed. Option {opt1} is partly true of the World Bank, so many learners choose it. It is not the reason both bodies were set up. Why a body exists is half of any usefulness answer you write.",
+    "id": 7,
+    "slot": 7,
+    "section": "The rules and the institutions",
+    "tier": "Understand"
+  },
+  {
+    "question": "A learner writes: under structural adjustment the IMF lent money with no conditions attached. What is wrong?",
+    "options": [
+      "The conditions were the entire point of any structural adjustment programme here",
+      "Structural adjustment was run by the World Bank rather than by the IMF",
+      "Structural adjustment programmes were only ever applied inside western Europe alone",
+      "The IMF gave the money as aid, so there was nothing to repay"
+    ],
+    "correct": 0,
+    "explanation": "The conditions were the whole thing. A government had to cut spending, sell state businesses and sell more abroad. Many learners choose option {opt1}, because the two bodies were founded together. If you take the conditions out, you cannot explain why this caused hardship.",
+    "id": 8,
+    "slot": 8,
+    "section": "The rules and the institutions",
+    "tier": "Apply"
+  },
+  {
+    "question": "In which year did China begin opening its economy to the outside world?",
+    "options": [
+      "1978",
+      "1949",
+      "1989",
+      "2001"
+    ],
+    "correct": 0,
+    "explanation": "1978. Option {opt1} is the year the People's Republic was founded, which is a different event. The date matters to you. China opening its economy is the cause. Its trade with Africa is the result. If you swap them, the whole lesson runs backwards.",
+    "id": 9,
+    "slot": 9,
+    "section": "Africa and the new balance of power",
+    "tier": "Recall"
+  },
+  {
+    "question": "What was set up in 2000 as a standing meeting between China and African governments?",
+    "options": [
+      "The Forum on China-Africa Cooperation",
+      "The Belt and Road Initiative",
+      "The African Continental Free Trade Area",
+      "The New Development Bank Group"
+    ],
+    "correct": 0,
+    "explanation": "The Forum on China-Africa Cooperation, usually shortened to FOCAC. Many learners choose option {opt1}, because both are Chinese programmes. One of them is a meeting. The other is a building programme that began thirteen years later. Keep them in order and you can show how the relationship changed.",
+    "id": 10,
+    "slot": 10,
+    "section": "Africa and the new balance of power",
+    "tier": "Recall"
+  },
+  {
+    "question": "Why did China's opening create a reason to trade with Africa?",
+    "options": [
+      "Its factories needed raw materials, and its goods needed customers",
+      "Its government wanted to spread communism across the continent",
+      "Its population was growing faster than its farmland could feed",
+      "Its currency could only be spent in countries outside Europe"
+    ],
+    "correct": 0,
+    "explanation": "Factories need materials coming in and buyers going out. Africa had both. Many learners choose option {opt1}, because Cold War aid really did have a political reason. After 1978 the reason is money. If you name the political reason first, you are describing the wrong decade.",
+    "id": 11,
+    "slot": 11,
+    "section": "Africa and the new balance of power",
+    "tier": "Understand"
+  },
+  {
+    "question": "What does the phrase debt trap claim?",
+    "options": [
+      "That a lender lends more than the borrower can ever repay",
+      "That a borrower hides how much money it has already borrowed",
+      "That interest rates rise without warning after a loan is signed",
+      "That a country borrows from several lenders at the same time"
+    ],
+    "correct": 0,
+    "explanation": "It claims the lender lends more than the borrower can ever pay back, on purpose. Many learners choose option {opt2}, because rising interest rates do cause debt problems. That is not the claim. People argue about this phrase, so say that it is what critics claim when you use it.",
+    "id": 12,
+    "slot": 12,
+    "section": "Africa and the new balance of power",
+    "tier": "Understand"
+  },
+  {
+    "question": "What do the letters in BRICS stand for?",
+    "options": [
+      "Brazil, Russia, India, China and South Africa",
+      "Britain, Russia, Italy, China and Spain",
+      "Brazil, Romania, Indonesia, China and Senegal",
+      "Brazil, Russia, Iran, China and South Korea"
+    ],
+    "correct": 0,
+    "explanation": "Brazil, Russia, India, China and South Africa. Many learners choose option {opt3}, because Iran and South Korea are both large economies. Learn the five. South Africa being a member matters to you. It is the one place in this topic where your own country is inside the story.",
+    "id": 13,
+    "slot": 13,
+    "section": "Emerging economies and BRICS",
+    "tier": "Recall"
+  },
+  {
+    "question": "What is state capitalism?",
+    "options": [
+      "Businesses run for profit while the state holds large stakes",
+      "An economy where the state owns everything and sets all prices",
+      "A system where private firms are banned from trading abroad",
+      "An economy run entirely by companies with no government at all"
+    ],
+    "correct": 0,
+    "explanation": "The firms still work for profit. The state owns a large share of them and decides what they do. Option {opt1} describes an economy where the state owns everything, and that is the usual mix-up. If you call China's economy communist, you have described the wrong thing.",
+    "id": 14,
+    "slot": 14,
+    "section": "Emerging economies and BRICS",
+    "tier": "Understand"
+  },
+  {
+    "question": "A learner writes: the BRICS countries all run the same kind of economy. What is wrong?",
+    "options": [
+      "They differ widely, and what they share is being large and growing",
+      "They do run the same economy, but only since South Africa joined",
+      "They are all command economies where the state sets every price",
+      "They are all free market economies with no state ownership at all"
+    ],
+    "correct": 0,
+    "explanation": "What they share is being large and growing fast. They do not share one system. Options {opt2} and {opt3} both give them one system, from opposite directions. If you treat BRICS as one economic model, you lose the whole point about different forms of capitalism.",
+    "id": 15,
+    "slot": 15,
+    "section": "Emerging economies and BRICS",
+    "tier": "Apply"
+  },
+  {
+    "question": "In which city did protests stop the World Trade Organisation talks in 1999?",
+    "options": [
+      "Seattle",
+      "Geneva",
+      "Porto Alegre",
+      "Edinburgh"
+    ],
+    "correct": 0,
+    "explanation": "Seattle, in the United States. Option {opt2} is where the World Social Forum first met. Option {opt3} is where the Make Poverty History march happened. All three cities belong to this section, so keep them apart. Each city is a different kind of response, and you need all three.",
+    "id": 16,
+    "slot": 16,
+    "section": "Responses to globalisation",
+    "tier": "Recall"
+  },
+  {
+    "question": "Why was the World Social Forum held in Brazil rather than in Europe?",
+    "options": [
+      "It was set up in the global South as an alternative meeting",
+      "Brazil was the only country that would allow it to be held",
+      "The organisers were all Brazilian and could not travel abroad",
+      "It was moved there after protests made Europe too dangerous"
+    ],
+    "correct": 0,
+    "explanation": "The organisers chose the South on purpose. The meeting of rich countries they were answering is held in Switzerland. Many learners choose option {opt1}, because governments did stop some protests. Tell the marker the place was a choice. The choice was the argument the forum was making, so you need it.",
+    "id": 17,
+    "slot": 17,
+    "section": "Responses to globalisation",
+    "tier": "Understand"
+  },
+  {
+    "question": "A learner writes: everyone who opposed globalisation wanted the same thing. What is wrong?",
+    "options": [
+      "Some wanted to reform the system and others wanted to end it",
+      "Almost nobody actually opposed globalisation at the time at all",
+      "They did want the same thing, but only after the year 2001",
+      "The opposition all came from inside the developing countries alone"
+    ],
+    "correct": 0,
+    "explanation": "It was never one movement. People who wanted to change the system and people who wanted to end it marched in the same streets. Many learners choose option {opt2}, because the forums did try to bring them together. If you claim one aim, you cannot explain why nothing single came out of it.",
+    "id": 18,
+    "slot": 18,
+    "section": "Responses to globalisation",
+    "tier": "Apply"
+  }
+];
+const TIER_MAP = {
+  Recall: { cls: 'chip-recall', label: 'Recall' },
+  Understand: { cls: 'chip-understand', label: 'Understand' },
+  Apply: { cls: 'chip-apply', label: 'Apply' }
+};
+const LEVELS = ['Recall','Understand','Apply'];
+
+// MODE is baked at build time: 'a' = Check 1 (before), 'b' = Check 2 (after).
+const IS_AFTER = (typeof MODE !== 'undefined' && MODE === 'b');
+
+// Read an optional prior score passed by the platform: ?prior=N
+function priorScore(){
+  try {
+    const p = new URLSearchParams(window.location.search).get('prior');
+    if(p === null) return null;
+    const n = parseInt(p, 10);
+    return (Number.isFinite(n) && n >= 0 && n <= 18) ? n : null;
+  } catch(e){ return null; }
+}
+
+// Intro copy differs by sitting.
+document.getElementById('intro-body').textContent = INTRO;
+
+const state = { filter: 'all', list: [], current: 0, answers: {}, order: {} };
+
+const menu = document.getElementById('menu-screen');
+const quiz = document.getElementById('quiz-screen');
+const review = document.getElementById('review-screen');
+
+function roman(n){ const m=[[10,'X'],[9,'IX'],[5,'V'],[4,'IV'],[1,'I']]; let r=''; for(const [v,s] of m){ while(n>=v){ r+=s; n-=v; } } return r; }
+
+function buildMenu(){
+  const list = document.getElementById('section-list');
+  list.innerHTML = '';
+  SECTIONS.forEach((sec, i) => {
+    const count = QUESTIONS.filter(q => q.section === sec).length;
+    const btn = document.createElement('button');
+    btn.className = 'section-btn';
+    btn.innerHTML = `<span class="section-roman">${roman(i+2)}.</span><span class="section-name">${sec}</span><span class="section-count">${count} Q</span>`;
+    btn.addEventListener('click', () => startQuiz(sec));
+    list.appendChild(btn);
+  });
+  document.querySelector('[data-filter="all"]').addEventListener('click', () => startQuiz('all'));
+}
+
+function startQuiz(filter){
+  state.filter = filter;
+  state.list = filter === 'all' ? QUESTIONS.slice() : QUESTIONS.filter(q => q.section === filter);
+  state.current = 0; state.answers = {}; state.order = {};
+  menu.classList.add('hidden'); review.classList.add('hidden'); quiz.classList.remove('hidden');
+  renderQuestion();
+}
+
+// Resolve {optN} tokens to the letter that content-option N carries after shuffling.
+// Returns plain text (letters only), so textContent stays safe.
+function resolveOpts(text, order){
+  if(!text) return text;
+  return text.replace(/\{opt(\d+)\}/g, (m, n) => {
+    const displayPos = order.indexOf(parseInt(n, 10));
+    return displayPos >= 0 ? String.fromCharCode(65 + displayPos) : m;
+  });
+}
+
+function shuffledOrder(q){
+  if(!state.order[q.id]){
+    const arr = q.options.map((_,i)=>i);
+    for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const t=arr[i]; arr[i]=arr[j]; arr[j]=t; }
+    state.order[q.id]=arr;
+  }
+  return state.order[q.id];
+}
+
+function renderQuestion(){
+  const q = state.list[state.current];
+  const answered = state.answers[q.id] !== undefined;
+  const diff = TIER_MAP[q.tier];
+  document.getElementById('quiz-section-name').textContent = state.filter === 'all' ? 'Full test' : q.section;
+  document.getElementById('quiz-progress').textContent = `Question ${state.current+1} of ${state.list.length}`;
+  document.getElementById('progress-fill').style.width = ((state.current+1)/state.list.length*100)+'%';
+  document.getElementById('section-tag').textContent = q.section;
+  const chip = document.getElementById('difficulty-chip');
+  chip.className = 'chip ' + diff.cls; chip.textContent = diff.label;
+  document.getElementById('question-text').textContent = q.question;
+
+  const order = shuffledOrder(q);
+  const cont = document.getElementById('options-container');
+  cont.innerHTML = '';
+  order.forEach((orig, pos) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    let mark = '';
+    if(answered){
+      btn.disabled = true;
+      if(orig === q.correct){ btn.classList.add('correct'); mark = '<span class="opt-mark">&#10003;</span>'; }
+      else if(orig === state.answers[q.id]){ btn.classList.add('wrong'); mark = '<span class="opt-mark">&#10007;</span>'; }
+      else btn.classList.add('dimmed');
+    }
+    btn.innerHTML = `<span class="opt-letter">${String.fromCharCode(65+pos)}</span><span class="opt-text">${q.options[orig]}</span>${mark}`;
+    if(!answered){ btn.addEventListener('click', () => { state.answers[q.id] = orig; renderQuestion(); }); }
+    cont.appendChild(btn);
+  });
+
+  const expl = document.getElementById('explanation');
+  if(answered){
+    expl.classList.remove('hidden');
+    document.getElementById('expl-text').textContent = resolveOpts(q.explanation, order);
+  }
+  else expl.classList.add('hidden');
+
+  // Back always does something: a step back inside the test, and from the first
+  // question it returns to the menu rather than sitting there dead.
+  const prevBtn = document.getElementById('prev-btn');
+  const atStart = state.current === 0;
+  prevBtn.disabled = false;
+  prevBtn.style.visibility = 'visible';
+  prevBtn.innerHTML = atStart ? '&larr; Back to menu' : '&larr; Previous';
+  const action = document.getElementById('action-btn');
+  action.textContent = state.current === state.list.length - 1 ? 'See results' : 'Next question';
+  action.disabled = !answered;
+
+  let got = 0, done = 0;
+  state.list.forEach(x => { if(state.answers[x.id] !== undefined){ done++; if(state.answers[x.id]===x.correct) got++; } });
+  document.getElementById('score-tally').textContent = `Score so far: ${got} / ${done}`;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+document.getElementById('action-btn').addEventListener('click', () => {
+  if(state.current < state.list.length - 1){ state.current++; renderQuestion(); }
+  else showReview();
+});
+document.getElementById('prev-btn').addEventListener('click', () => {
+  if(state.current>0){ state.current--; renderQuestion(); }
+  else { document.getElementById('quiz-screen').classList.add('hidden');
+         document.getElementById('menu-screen').classList.remove('hidden');
+         window.scrollTo({top:0,behavior:'smooth'}); }
+});
+document.getElementById('exit-btn').addEventListener('click', () => { quiz.classList.add('hidden'); menu.classList.remove('hidden'); });
+document.getElementById('restart-btn').addEventListener('click', () => { review.classList.add('hidden'); menu.classList.remove('hidden'); });
+
+/* v2.1. Every file in a unit now ends the same way: Finish, then a pop-up whose
+   only job is to tell the learner to tap the platform's Done control. The four
+   knowledge checks previously ended on the results screen with no instruction,
+   so two files in every seven closed differently from the other five. */
+document.getElementById('finish-btn').addEventListener('click', () => {
+  const back = document.createElement('div');
+  back.className = 'pop-back';
+  back.innerHTML = '<div class="pop"><div class="pop-label">' + DONE_LABEL +
+    '</div><h3 style="margin:.4rem 0 .2rem;font-size:1.05rem;">' + DONE_TITLE +
+    '</h3><div class="pop-text">' + DONE_TEXT +
+    '</div><button class="pop-btn" id="fin-ok">Done</button></div>';
+  document.body.appendChild(back);
+  document.getElementById('fin-ok').addEventListener('click', () => back.remove());
+});
+
+function weakestSection(){
+  let worst = SECTIONS[0], worstPct = 2;
+  SECTIONS.forEach(sec => {
+    const qs = state.list.filter(q => q.section === sec);
+    if(!qs.length) return;
+    const got = qs.filter(q => state.answers[q.id] === q.correct).length;
+    const p = got/qs.length;
+    if(p < worstPct){ worstPct = p; worst = sec; }
+  });
+  return worst;
+}
+
+function showReview(){
+  quiz.classList.add('hidden'); review.classList.remove('hidden');
+  const total = state.list.length;
+  let correct = 0;
+  state.list.forEach(q => { if(state.answers[q.id] === q.correct) correct++; });
+  const pct = total ? Math.round(correct/total*100) : 0;
+  document.getElementById('score-correct').textContent = correct;
+  document.getElementById('score-total').textContent = total;
+  document.getElementById('score-percent').textContent = pct;
+
+  // Word bands, not letters. Copy differs by sitting.
+  let band='', desc='';
+  const weakest = weakestSection();
+  if(IS_AFTER){
+    if(pct>=85){ band='Excellent'; desc='The facts have stuck. Your last step is to write the essay question out under timed conditions: one hour, three pages.'; }
+    else if(pct>=70){ band='Strong'; desc='Strong recall after the lessons. Look again at anything you missed, then write the essay out under time.'; }
+    else if(pct>=55){ band='Solid'; desc='A solid base. Your weakest area was ' + weakest + '. Go back to the lesson that covers it, then try the timed essay.'; }
+    else if(pct>=40){ band='Patchy'; desc='Some of it has stuck and some has not. Your weakest area was ' + weakest + '. Revisit that lesson, then take this again.'; }
+    else { band='Start again'; desc='The facts have not settled yet. Go back to the lessons, starting with ' + weakest + ', and work through them again before the exam.'; }
+  } else {
+    if(pct>=85){ band='Excellent'; desc='A strong start even before the lessons. Go to Lesson 1 and start turning these facts into an argument.'; }
+    else if(pct>=70){ band='Strong'; desc='You already know a lot of this. Go to Lesson 1, where you learn to use it.'; }
+    else if(pct>=55){ band='Solid'; desc='A decent base to build on. Go to Lesson 1 and start building the argument.'; }
+    else if(pct>=40){ band='Patchy'; desc='A normal starting point before studying a topic. Go to Lesson 1: that is exactly what it is for.'; }
+    else { band='Just starting'; desc='A low score before you have studied a topic is the normal place to begin, not a warning. Go straight to Lesson 1.'; }
+  }
+  document.getElementById('score-grade').textContent = band;
+  document.getElementById('grade-desc').textContent = desc;
+
+  // Check 1 tells the learner to note the score. Check 2 shows the comparison if we have it.
+  const cmp = document.getElementById('compare-line');
+  if(IS_AFTER){
+    const prior = priorScore();
+    if(prior !== null && state.filter === 'all'){
+      const diff = correct - prior;
+      const move = diff > 0 ? ('up ' + diff) : (diff < 0 ? ('down ' + (-diff)) : 'the same');
+      cmp.textContent = 'Before the lessons: ' + prior + ' out of 18. Now: ' + correct + ' out of 18. That is ' + move + '.';
+      cmp.classList.remove('hidden');
+    } else {
+      cmp.classList.add('hidden');
+    }
+  } else {
+    cmp.textContent = 'Write this score down. When you finish Lesson 5, the second check will compare against it.';
+    cmp.classList.remove('hidden');
+  }
+
+  const levelRows = document.getElementById('level-rows'); levelRows.innerHTML = '';
+  LEVELS.forEach(level => {
+    const qs = state.list.filter(q => q.tier === level);
+    if(!qs.length) return;
+    const got = qs.filter(q => state.answers[q.id] === q.correct).length;
+    const p = Math.round(got/qs.length*100);
+    levelRows.innerHTML += `<div class="breakdown-row"><div class="breakdown-name">${level}</div><div class="breakdown-bar"><div class="breakdown-fill" style="width:${p}%"></div></div><div class="breakdown-score">${got}/${qs.length}</div></div>`;
+  });
+
+  const rows = document.getElementById('breakdown-rows'); rows.innerHTML = '';
+  SECTIONS.forEach(sec => {
+    const qs = state.list.filter(q => q.section === sec);
+    if(!qs.length) return;
+    const got = qs.filter(q => state.answers[q.id] === q.correct).length;
+    const p = Math.round(got/qs.length*100);
+    rows.innerHTML += `<div class="breakdown-row"><div class="breakdown-name">${sec}</div><div class="breakdown-bar"><div class="breakdown-fill" style="width:${p}%"></div></div><div class="breakdown-score">${got}/${qs.length}</div></div>`;
+  });
+
+  const cards = document.getElementById('review-cards'); cards.innerHTML = '';
+  state.list.forEach((q, i) => {
+    const your = state.answers[q.id];
+    const right = your === q.correct;
+    const card = document.createElement('div');
+    card.className = 'review-card ' + (right ? 'got' : 'missed');
+    let inner = `<div class="review-q">${i+1}. ${q.question}</div>`;
+    if(right){
+      inner += `<div class="review-a right"><span class="lab">Correct:</span> ${q.options[q.correct]}</div>`;
+    } else {
+      inner += `<div class="review-a yours-wrong"><span class="lab">Your answer:</span> ${your!==undefined ? q.options[your] : 'not answered'}</div>`;
+      inner += `<div class="review-a right"><span class="lab">Correct:</span> ${q.options[q.correct]}</div>`;
+    }
+    card.innerHTML = inner;
+    cards.appendChild(card);
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+buildMenu();
+})();
+
+
+/* ---- MODE TOGGLE ---------------------------------------------------------
+   Injects its own button so there is no stray markup, and lives inside the
+   single script block so a first-to-last script extraction still parses. */
+(function(){
+  var NATIVE = "light";
+  try{ if(localStorage.getItem("kula-mode")==="alt"){ document.body.classList.add("alt"); } }catch(e){}
+  var SUN='<circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/>';
+  var MOON='<path d="M20.5 14.6A8.6 8.6 0 0 1 9.4 3.5a8.6 8.6 0 1 0 11.1 11.1z"/>';
+  var b=document.getElementById("mode-toggle");
+  if(!b){
+    b=document.createElement("button");
+    b.className="mode-toggle"; b.id="mode-toggle"; b.type="button";
+    b.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true" id="mode-icon"></svg><span id="mode-label"></span>';
+    document.body.appendChild(b);
+  }
+  var lab=document.getElementById("mode-label"), ic=document.getElementById("mode-icon");
+  function paint(){
+    var onAlt=document.body.classList.contains("alt");
+    var showing = onAlt ? (NATIVE==="dark" ? "light" : "dark") : NATIVE;
+    var offering = showing==="dark" ? "light" : "dark";
+    lab.textContent = offering==="light" ? "Light Mode" : "Dark Mode";
+    ic.innerHTML = offering==="light" ? SUN : MOON;
+    b.setAttribute("aria-pressed", onAlt ? "true" : "false");
+    b.setAttribute("aria-label", "Switch to " + offering + " mode");
+  }
+  b.addEventListener("click",function(){
+    var onAlt=document.body.classList.toggle("alt");
+    try{ localStorage.setItem("kula-mode", onAlt ? "alt" : "native"); }catch(e){}
+    paint();
+  });
+  paint();
+
+})();
+</script>
+</body>
+</html>
