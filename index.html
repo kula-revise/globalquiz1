@@ -50,14 +50,14 @@
     --ink-deep:   #12202a;              /* --ink one step darker, button hover */
     --a2-deep:    #164C3F;              /* --a2 one step darker, button hover */
     --ok-bg:      rgba(var(--a2-rgb),0.13);  /* a correct option, a placed item */
-    --no-bg:      rgba(140,74,47,0.13);      /* a wrong option, a misplaced item */
+    --no-bg:      rgba(11,82,184,0.13);      /* a wrong option, a misplaced item */
     /* Skill chips. a = the entry-level skill (Extract, Argue, Evidence, Recall).
        b = the middle skill (Interpret, Understand). c = unassessed instinct.
        The top skill (Evaluate, Weigh, Apply) sits on a solid accent ground. */
     --chip-a-bg: rgba(var(--a1-rgb),0.16);  --chip-a-fg: var(--a1);
     --chip-b-bg: rgba(var(--a2-rgb),0.16);  --chip-b-fg: var(--a2);
     --chip-c-bg: rgba(0,0,0,0.06);
-    --scrim:  rgba(27,42,51,0.5);       /* modal backdrop */
+    --scrim:  rgba(13,24,38,0.5);       /* modal backdrop */
     --inset:  rgba(255,255,255,0.4);    /* sort column well */
 
     /* Legacy aliases. Older skins and the quiz shell reference these. */
@@ -152,22 +152,22 @@
      - mono appears on the source header and nowhere else */
 
 :root {
-  --sand:  #ECEEF0;   /* page: cold grey */
-  --paper: #F8FAFB;   /* cards */
-  --cut:   #E1E6E9;   /* insets, sources, carousels */
-  --ink:   #14202A;
-  --clay:  #4C5A63;   /* stage tags, quiet labels */
-  --fade:  #5F6B73;
+  --sand:  #DBE6F5;   /* page: sea, the one chromatic ground in the register */
+  --paper: #F5F9FF;   /* cards */
+  --cut:   #C6D8EF;   /* insets, sources, carousels */
+  --ink:   #0D1826;
+  --clay:  #45566B;   /* stage tags, quiet labels */
+  --fade:  #495A6E;
   /* container orange for structure, sea teal for reward */
-  /* Was #BC4E1B: fine on a card at 4.73, but 3.93 on the --cut insets where the
+  /* Was #0B52B8: fine on a card at 4.73, but 3.93 on the --cut insets where the
      option letters, the rank numbers and the expander link sit. */
-  --a1: #A84517;  --a1-rgb: 168,69,23;
-  --a2: #0F6469;  --a2-rgb: 15,100,105;
+  --a1: #0B52B8;  --a1-rgb: 11,82,184;
+  --a2: #0F6839;  --a2-rgb: 15,104,57;
   /* The two hover steps are derived, not identity. They stayed on the
      engine's bottle green when this skin overrode --a2, which is why
      Continue and Begin hovered a colour from no other part of the unit. */
-  --ink-deep: #0D161D;
-  --a2-deep:  #0B4B4F;
+  --ink-deep: #08111C;
+  --a2-deep:  #0B4E2A;
   --sans:  system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   --serif: Georgia, 'Times New Roman', serif;
   --mono:  ui-monospace, 'Cascadia Code', Consolas, 'Courier New', monospace;
@@ -177,7 +177,7 @@
 body {
   font-family: var(--sans) !important;
   background-image:
-    radial-gradient(circle at 1px 1px, rgba(20,32,42,0.10) 1px, transparent 1.6px) !important;
+    radial-gradient(circle at 1px 1px, rgba(13,24,38,0.10) 1px, transparent 1.6px) !important;
   background-size: 22px 22px !important;
 }
 h1, h2, h3 {
@@ -273,56 +273,56 @@ h1, h2, h3 {
 /* ---- DARK MODE ------------------------------------------------------------
    The yard at night. The dot grid stays, lit rather than printed. */
 body.dark {
-  --sand:  #101619;
-  --paper: #192227;
-  --cut:   #212C32;
-  --ink:   #E9EFF2;
-  --clay:  #A3B0B8;
-  --fade:  #93A0A8;
-  --a1: #E8834A;  --a1-rgb: 232,131,74;
-  --a2: #55B7BC;  --a2-rgb: 85,183,188;
+  --sand:  #081428;
+  --paper: #0F2038;
+  --cut:   #17304F;
+  --ink:   #E6EEFA;
+  --clay:  #97A9C2;
+  --fade:  #8A9CB6;
+  --a1: #6FB0FF;  --a1-rgb: 111,176,255;
+  --a2: #4ADE80;  --a2-rgb: 74,222,128;
 }
 body.dark {
   background-image:
-    radial-gradient(circle at 1px 1px, rgba(233,239,242,0.11) 1px, transparent 1.6px) !important;
+    radial-gradient(circle at 1px 1px, rgba(230,238,250,0.11) 1px, transparent 1.6px) !important;
   background-size: 22px 22px !important;
 }
 body.dark .card, body.dark .stat-wrap, body.dark .carousel, body.dark .kt {
-  border-color: rgba(233,239,242,0.16) !important;
+  border-color: rgba(230,238,250,0.16) !important;
   border-left-color: var(--a1) !important;
 }
-body.dark .source { background: var(--cut) !important; border-color: rgba(233,239,242,0.22) !important; }
-body.dark .source-attr { background: #0B1215 !important; color: #E9EFF2 !important; }
+body.dark .source { background: var(--cut) !important; border-color: rgba(230,238,250,0.22) !important; }
+body.dark .source-attr { background: #050E1C !important; color: #E6EEFA !important; }
 body.dark .stage-tag, body.dark .kt-label, body.dark .expl-label,
 body.dark .breakdown-label {
-  color: #8FD3D7 !important; border-color: rgba(85,183,188,0.55) !important; background: transparent !important;
+  color: #8DE9AE !important; border-color: rgba(74,222,128,0.55) !important; background: transparent !important;
 }
-body.dark .btn-begin { background: var(--a1) !important; border-color: var(--a1) !important; color: #101619 !important; }
-body.dark .btn-begin:hover { background: #F09A67 !important; border-color: #F09A67 !important; }
-body.dark .mode-toggle { background: #232E35 !important; color: #C7D2D8 !important; border-color: rgba(233,239,242,0.22) !important; box-shadow: 0 2px 10px rgba(0,0,0,0.45) !important; }
-body.dark .mode-toggle:hover { color: #E9EFF2 !important; border-color: rgba(233,239,242,0.40) !important; }
+body.dark .btn-begin { background: var(--a1) !important; border-color: var(--a1) !important; color: #081428 !important; }
+body.dark .btn-begin:hover { background: #9AC8FF !important; border-color: #9AC8FF !important; }
+body.dark .mode-toggle { background: #16283F !important; color: #B8C8DE !important; border-color: rgba(230,238,250,0.22) !important; box-shadow: 0 2px 10px rgba(0,0,0,0.45) !important; }
+body.dark .mode-toggle:hover { color: #E6EEFA !important; border-color: rgba(230,238,250,0.40) !important; }
 body.dark .rule, body.dark .cover-rule, body.dark .flourish, body.dark .story-rule {
   background-image: repeating-linear-gradient(90deg, var(--a1) 0 7px, transparent 7px 14px) !important;
 }
-body.dark .chip { background: rgba(232,131,74,0.18) !important; color: #F6C6A6 !important; }
-body.dark .chip-recall,     body.dark .chip-extract   { background: rgba(232,131,74,0.22) !important; color: #F8D3BA !important; }
-body.dark .chip-understand, body.dark .chip-interpret { background: rgba(85,183,188,0.22) !important; color: #B9E6E8 !important; }
-body.dark .chip-apply,      body.dark .chip-evaluate  { background: rgba(233,239,242,0.18) !important; color: #E9EFF2 !important; }
+body.dark .chip { background: rgba(111,176,255,0.18) !important; color: #C4DEFF !important; }
+body.dark .chip-recall,     body.dark .chip-extract   { background: rgba(111,176,255,0.22) !important; color: #D3E7FF !important; }
+body.dark .chip-understand, body.dark .chip-interpret { background: rgba(74,222,128,0.22) !important; color: #B4F2C9 !important; }
+body.dark .chip-apply,      body.dark .chip-evaluate  { background: rgba(230,238,250,0.18) !important; color: #E6EEFA !important; }
 
 /* ---- DARK MODE STATE COLOURS ---------------------------------------------- */
 body.dark .option, body.dark .option-btn {
   background: var(--cut) !important;
-  border-color: rgba(233,239,242,0.22) !important;
+  border-color: rgba(230,238,250,0.22) !important;
   color: var(--ink) !important;
 }
 body.dark .option.selected, body.dark .option-btn.selected {
-  background: rgba(85,183,188,0.18) !important; border-color: #55B7BC !important; }
+  background: rgba(74,222,128,0.18) !important; border-color: #4ADE80 !important; }
 body.dark .option.correct, body.dark .option-btn.correct {
-  background: rgba(85,183,188,0.24) !important; border-color: #55B7BC !important; color: var(--ink) !important; }
+  background: rgba(74,222,128,0.24) !important; border-color: #4ADE80 !important; color: var(--ink) !important; }
 body.dark .option.wrong, body.dark .option-btn.wrong {
-  background: rgba(232,131,74,0.20) !important; border-color: #E8834A !important; color: var(--ink) !important; }
+  background: rgba(111,176,255,0.20) !important; border-color: #6FB0FF !important; color: var(--ink) !important; }
 body.dark .secondary-btn:hover:not(:disabled) { background: var(--cut) !important; }
-body.dark .explanation { background: var(--cut) !important; border-color: rgba(85,183,188,0.30) !important; }
+body.dark .explanation { background: var(--cut) !important; border-color: rgba(74,222,128,0.30) !important; }
 body.dark .expl-text { color: var(--ink) !important; }
 body.dark .quiz-foot, body.dark .quiz-foot a { color: var(--clay) !important; }
 
@@ -333,7 +333,7 @@ body.dark .option.dimmed, body.dark .option-btn.dimmed { opacity: 0.86; }
 
 /* Button hover must not read as a different colour family. Light mode now
    comes from --a2-deep in the identity block above. */
-body.dark .btn-primary:hover:not(:disabled) { background: #6FC7CB !important; color: #101619 !important; }
+body.dark .btn-primary:hover:not(:disabled) { background: #7BEBA3 !important; color: #081428 !important; }
 
 /* The toggle is a rounded pill on a white ground, the one round thing in a
    skin of hard edges. It is fixed bottom right and lands on Continue on a
@@ -343,14 +343,14 @@ body.dark .btn-primary:hover:not(:disabled) { background: #6FC7CB !important; co
   border-radius: 999px !important;
   font-family: var(--sans) !important;
   background: #FFFFFF !important;
-  color: #4C5A63 !important;
-  border: 1px solid rgba(20,32,42,0.14) !important;
+  color: #45566B !important;
+  border: 1px solid rgba(13,24,38,0.14) !important;
   padding: 0.62rem 1.05rem !important;
   gap: 0.5rem !important;
   letter-spacing: 0.14em !important;
-  box-shadow: 0 2px 10px rgba(20,32,42,0.10) !important;
+  box-shadow: 0 2px 10px rgba(13,24,38,0.10) !important;
 }
-.mode-toggle:hover { color: #14202A !important; border-color: rgba(20,32,42,0.30) !important; }
+.mode-toggle:hover { color: #0D1826 !important; border-color: rgba(13,24,38,0.30) !important; }
 .mode-toggle svg { width: 0.95rem !important; height: 0.95rem !important; stroke-width: 1.8 !important; }
 body { padding-bottom: 4.5rem !important; }
 @media (max-width: 520px) {
@@ -369,8 +369,8 @@ body { padding-bottom: 4.5rem !important; }
   border-top: 2px solid var(--a1);
   padding-top: 0.6rem;
 }
-.figure img { border: 1px solid rgba(188,78,27,0.35) !important; border-radius: 0 !important; width: 100%; height: auto; }
-body.dark .figure img { border-color: rgba(232,131,74,0.40) !important; filter: brightness(0.92) contrast(1.02); }
+.figure img { border: 1px solid rgba(11,82,184,0.35) !important; border-radius: 0 !important; width: 100%; height: auto; }
+body.dark .figure img { border-color: rgba(111,176,255,0.40) !important; filter: brightness(0.92) contrast(1.02); }
 body.dark .figure figcaption { border-top-color: var(--a1); }
 
 
@@ -500,152 +500,9 @@ body.dark .figure figcaption { border-top-color: var(--a1); }
     border: 1px solid var(--hair); border-radius: 0; }
   .review-actions { display: grid; gap: 0.7rem; }
 
-
-/* ============================================================
-   EARNED STATES READ GREEN
-   Applied identically to the other three source strands.
-
-   This skin gives sea teal the job of "anything the learner
-   earned". Green takes the narrow part of that job, the correct
-   answer itself, and teal keeps the marks, the key facts and
-   the primary button. Green is a new token rather than a
-   repointed --a2, because repointing would turn the strand
-   green and lose the container orange against sea teal that the
-   identity is built on. Teal sits at hue 183 and the green at
-   132, which is 51 degrees of separation, so the two do not
-   read as one colour on a phone.
-
-   The correct option fills solid so it reads as the answer from
-   across the room. The asymmetry is deliberate: the option you
-   got right is loud, the one you picked and got wrong stays a
-   quiet tint with a firm border, because a learner who is
-   already wrong does not need it shouted at them.
-
-   Measured on this skin's own grounds:
-     light  paper text on #2A6335      6.84 : 1
-            the fill against the page  6.15 : 1
-     dark   ink text on #93D98A       10.89 : 1
-   Colour is never the only signal: the tick and the cross carry
-   the state too, which matters because correct green against
-   wrong orange is a hard pair for the commonest form of colour
-   blindness.
-   ============================================================ */
-:root { --ok: #2A6335; --ok-rgb: 42,99,53; --on-ok: #F8FAFB; }
-body.dark { --ok: #93D98A; --ok-rgb: 147,217,138; --on-ok: #101619; }
-
-.option.correct, .option-btn.correct,
-body.dark .option.correct, body.dark .option-btn.correct {
-  background: var(--ok) !important;
-  border: 2px solid var(--ok) !important;
-  box-shadow: 5px 5px 0 rgba(var(--ok-rgb),0.30) !important;
-  color: var(--on-ok) !important;
-}
-.option.correct .opt-text, .option-btn.correct .opt-text,
-.option.correct .opt-letter, .option-btn.correct .opt-letter,
-.option.correct .opt-mark, .option-btn.correct .opt-mark,
-body.dark .option.correct .opt-text, body.dark .option-btn.correct .opt-text,
-body.dark .option.correct .opt-letter, body.dark .option-btn.correct .opt-letter,
-body.dark .option.correct .opt-mark, body.dark .option-btn.correct .opt-mark {
-  color: var(--on-ok) !important;
-}
-.option.correct .opt-letter, .option-btn.correct .opt-letter { opacity: 0.85; }
-
-.option.wrong, .option-btn.wrong {
-  background: var(--no-bg) !important;
-  border: 2px solid var(--a1) !important;
-  box-shadow: none !important;
-}
-.option.wrong .opt-letter, .option.wrong .opt-mark,
-.option-btn.wrong .opt-letter, .option-btn.wrong .opt-mark { color: var(--a1) !important; }
-
-.inter-item.ok, body.dark .inter-item.ok {
-  background: var(--ok) !important;
-  border: 2px solid var(--ok) !important;
-  color: var(--on-ok) !important;
-}
-.inter-item.ok span, .inter-item.ok .rank,
-body.dark .inter-item.ok span, body.dark .inter-item.ok .rank { color: var(--on-ok) !important; }
-.inter-item.ok .rank { opacity: 0.85; }
-.bd-fill { background: var(--ok) !important; }
-
-/* ---- Correctness reads on the sort and the order --------------
-   Both changed only by a pale tint after Check, close enough to
-   the placed state that the screen looked unchanged.
-   -------------------------------------------------------------- */
-.inter-item { justify-content: flex-start; }
-.inter-body { flex: 1 1 auto; }
-.inter-mark { font-weight: 700; font-size: 1.1rem; margin-left: 0.6rem; flex: 0 0 auto; }
-.inter-item.ok .inter-mark { color: var(--on-ok) !important; }
-.inter-item.no { background: var(--no-bg) !important; border: 2px solid var(--a1) !important; }
-.inter-item.no .inter-mark, .inter-item.no .rank { color: var(--a1) !important; }
-.inter-should {
-  display: block; margin-top: 0.3rem;
-  font-family: var(--sans); font-size: 0.72rem; font-weight: 700;
-  letter-spacing: 0.06em; text-transform: uppercase; color: var(--a1);
-}
-
-/* A dashed border is the web's convention for a drop target and there
-   is no drag and drop anywhere in the page. */
-.sort-col { border-style: solid !important; }
-
-/* Sort columns stack on a phone. At 390px a two column grid gives each
-   column about 110px, and a ten word claim wraps to one word a line. */
-@media (max-width: 560px) {
-  .sort-cols { grid-template-columns: 1fr; gap: 0.7rem; }
-  .sort-col { min-height: 3rem; }
-}
-
-/* An inline label that does nothing loses the accent, so the one
-   coloured thing a learner can open still looks openable. */
-.card p > strong:first-child, .source p > strong:first-child { color: var(--ink) !important; }
-.kt-term > summary {
-  color: var(--a2);
-  text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 3px;
-}
-
-/* (2 x 2) is exam notation and nothing in the file explains it. */
-.marks-gloss {
-  font-family: var(--sans); font-size: 0.74rem; line-height: 1.5;
-  color: var(--fade); margin: -0.3rem 0 0.9rem;
-  border-left: 2px solid var(--hair-strong); padding-left: 0.6rem;
-}
-.score-note {
-  font-family: var(--sans); font-size: 0.8rem; line-height: 1.55;
-  color: var(--fade); text-align: center; margin: -0.4rem 0 1.3rem;
-}
-/* The reopen preview shows a sentence of the source now, not a
-   bibliography line, so it stops being uppercased. */
-.peek-who { text-transform: none !important; letter-spacing: 0 !important; }
-
-
-/* ---- Two things caught by rendering at 390px -----------------
-
-   1. The wrong-answer glyph and letter take --a1, which composites
-      to 4.00 and 3.92 against the wrong-option tint on the dark
-      ground. The tick and the cross are what carry the state for a
-      learner who cannot separate the two hues, so the glyph has to
-      be legible on its own. 5.37 after this.
-
-   2. The top bar tag is set to ellipsis on one line, and
-      "Kula Revise . Grade 12 . Globalisation" is long enough to be
-      cut on a 390px screen: the learner saw the strand name
-      truncated on every step. The tag now shrinks a step and
-      drops the leading brand words on narrow screens rather than
-      losing the end of the strand name.
-   -------------------------------------------------------------- */
-body.dark .option.wrong .opt-letter, body.dark .option.wrong .opt-mark,
-body.dark .option-btn.wrong .opt-letter, body.dark .option-btn.wrong .opt-mark,
-body.dark .inter-item.no .inter-mark, body.dark .inter-item.no .rank {
-  color: #F2A57A !important;
-}
-@media (max-width: 430px) {
-  .top-meta { font-size: 0.58rem !important; letter-spacing: 0.06em !important; }
-  .top-meta #lesson-tag { min-width: 0; }
-}
-
 </style>
 </head>
-<body class="dark">
+<body>
 <div class="container">
 
   <!-- MENU -->
@@ -707,7 +564,7 @@ body.dark .inter-item.no .inter-mark, body.dark .inter-item.no .rank {
       <div class="rule"></div>
     </div>
     <div class="score-row">
-      <div class="score-block"><div class="score-num"><span id="score-correct">0</span><span class="score-den">/<span id="score-total">0</span></span></div><div class="score-label">Questions right</div></div>
+      <div class="score-block"><div class="score-num"><span id="score-correct">0</span><span class="score-den">/<span id="score-total">0</span></span></div><div class="score-label">Correct</div></div>
       <div class="score-block"><div class="score-num"><span id="score-percent">0</span><span class="score-den">%</span></div><div class="score-label">Accuracy</div></div>
       <div class="score-block"><div class="score-word" id="score-grade">-</div><div class="score-label">Band</div></div>
     </div>
@@ -1170,7 +1027,7 @@ document.getElementById('restart-btn').addEventListener('click', () => { review.
 
 /* The button at the end of the file is the thing that continues. It does not
    point at a control somewhere else on the page. */
-document.getElementById('finish-btn').onclick = () => { KulaLMS.advance(); };
+document.getElementById('finish-btn').addEventListener('click', () => { KulaLMS.advance(); });
 
 function weakestSection(){
   let worst = SECTIONS[0], worstPct = 2;
@@ -1198,13 +1055,13 @@ function showReview(){
   let band='', desc='';
   const weakest = weakestSection();
   if(IS_AFTER){
-    if(pct>=85){ band='Excellent'; desc='The facts have stuck. Your last step is to sit the Lesson 5 source run again, this time against the clock.'; }
-    else if(pct>=70){ band='Strong'; desc='Strong recall after the lessons. Look again at anything you missed, then sit the Lesson 5 source run against the clock.'; }
-    else if(pct>=55){ band='Solid'; desc='A solid base. Your weakest area was ' + weakest + '. Go back to the lesson that covers it, then sit the Lesson 5 source run against the clock.'; }
+    if(pct>=85){ band='Excellent'; desc='The facts have stuck. Your last step is to write the essay question out under timed conditions: one hour, three pages.'; }
+    else if(pct>=70){ band='Strong'; desc='Strong recall after the lessons. Look again at anything you missed, then write the essay out under time.'; }
+    else if(pct>=55){ band='Solid'; desc='A solid base. Your weakest area was ' + weakest + '. Go back to the lesson that covers it, then try the timed essay.'; }
     else if(pct>=40){ band='Patchy'; desc='Some of it has stuck and some has not. Your weakest area was ' + weakest + '. Revisit that lesson, then take this again.'; }
     else { band='Start again'; desc='The facts have not settled yet. Go back to the lessons, starting with ' + weakest + ', and work through them again before the exam.'; }
   } else {
-    if(pct>=85){ band='Excellent'; desc='A strong start even before the lessons. Go to Lesson 1 and start turning these facts into evidence you can use.'; }
+    if(pct>=85){ band='Excellent'; desc='A strong start even before the lessons. Go to Lesson 1 and start turning these facts into an argument.'; }
     else if(pct>=70){ band='Strong'; desc='You already know a lot of this. Go to Lesson 1, where you learn to use it.'; }
     else if(pct>=55){ band='Solid'; desc='A decent base to build on. Go to Lesson 1 and start building the argument.'; }
     else if(pct>=40){ band='Patchy'; desc='A normal starting point before studying a topic. Go to Lesson 1: that is exactly what it is for.'; }
@@ -1290,17 +1147,10 @@ buildMenu();
    To port this to an essay unit, set NATIVE to "dark", FLIP to "light" and CLS
    to "bright". Nothing else changes. */
 (function(){
-  var NATIVE = "light";   // the mode the stylesheet produces with no class on body
-  var FLIP   = "dark";    // the mode the class produces
+  var NATIVE = "light";   // the mode this unit is designed in
+  var FLIP   = "dark";    // the mode the toggle offers
   var CLS    = "dark";    // the class that produces FLIP in this unit
-  /* The unit OPENS in dark. body carries the class in the markup rather than
-     having it added here, so there is no flash of the light ground before
-     this script runs at the foot of the document. All this block does is
-     honour a learner who has already chosen otherwise. */
-  var stored = null;
-  try{ stored = localStorage.getItem("kula-mode"); }catch(e){}
-  if(stored === NATIVE) document.body.classList.remove(CLS);
-  else if(stored === FLIP) document.body.classList.add(CLS);
+  try{ if(localStorage.getItem("kula-mode")===FLIP){ document.body.classList.add(CLS); } }catch(e){}
   var SUN='<circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/>';
   var MOON='<path d="M20.5 14.6A8.6 8.6 0 0 1 9.4 3.5a8.6 8.6 0 1 0 11.1 11.1z"/>';
   var b=document.getElementById("kula-mode-toggle");
